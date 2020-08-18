@@ -18,7 +18,7 @@ on:
 #    branches:
 #      - master
 #    paths:
-#      - 'Lede-5.4.config'
+#      - 'Lede-54.config'
 
 
 #定时触发开始编译(utc時間)
