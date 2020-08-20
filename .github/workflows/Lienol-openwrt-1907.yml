@@ -84,7 +84,7 @@ jobs:
 
     - name: 删除不需要的插件
       run: |
-        cp -f /banner package/base-files/files/etc/
+        cp -f ./banner package/base-files/files/etc/
 
     - name: 加载自定义插件设置
       run: |
