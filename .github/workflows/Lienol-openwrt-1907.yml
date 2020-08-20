@@ -80,7 +80,7 @@ jobs:
         rm -fr package/lean/shortcut-fe/
         rm -fr package/lean/luci-app-sfe/
         rm -rf package/base-files/files/etc/banner
-        cp -f /banner package/base-files/files/etc/
+        cp -f banner package/base-files/files/etc/
 
     - name: 加载自定义插件设置
       run: |
