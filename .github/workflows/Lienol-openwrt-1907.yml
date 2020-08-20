@@ -75,10 +75,12 @@ jobs:
     - name: 删除不需要的插件
       run: |
         cd openwrt
-        rm package/lean/luci-theme-argon -rf
-        rm package/lean/luci-app-flowoffload -fr
-        rm package/lean/shortcut-fe/ -fr
-        rm package/lean/luci-app-sfe/ -fr
+        rm -rf package/lean/luci-theme-argon
+        rm -fr package/lean/luci-app-flowoffload
+        rm -fr package/lean/shortcut-fe/
+        rm -fr package/lean/luci-app-sfe/
+        rm -rf package/base-files/files/etc/banner
+        cp -f ../banner package/base-files/files/etc/
 
     - name: 加载自定义插件设置
       run: |
@@ -109,6 +111,8 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        sed -i 's/OpenWrt/OpenWrt-123/g' openwrt/package/base-files/files/bin/config_generate
+        sed -i 's/config internal themes/config internal themes\n    option Argon  \"\/luci-static\/argon\"/g' openwrt/feeds/luci/modules/luci-base/root/etc/config/luci
      #   sed -i 's/KERNEL_PATCHVER:=4.14/KERNEL_PATCHVER:=4.19/g' openwrt/target/linux/x86/Makefile
      #   sed -i 's/192.168.1.1/192.168.2.2/g' openwrt/package/base-files/files/bin/config_generate
 
