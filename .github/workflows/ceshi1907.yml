@@ -75,7 +75,6 @@ jobs:
     - name: 下载和安装插件
       run: |
         cd openwrt
-        git checkout -b k5 origin/k5
         ./prepareCompile.sh
 
     - name: 加载Lede-4.19.config
