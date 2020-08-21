@@ -50,7 +50,7 @@ jobs:
 
     steps:      
     - name: 准备完毕
-      uses: actions/checkout@v2
+      uses: actions/checkout@main
 
     - name: 开始安装编译所需系统
       env:
@@ -124,7 +124,7 @@ jobs:
      #   sed -i 's/192.168.1.1/192.168.2.2/g' openwrt/package/base-files/files/bin/config_generate
 
     - name: SSH远程连接服务器配置固件
-      uses: P3TERX/debugger-action@v2
+      uses: P3TERX/debugger-action@main
       if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
 
     - name: 下载所有配置软件
@@ -152,7 +152,7 @@ jobs:
       run: df -hT
 
     - name: 上传bin文件夹(固件+ipk)在github空间
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: 19.07_bin_${{ env.FILE_DATE }}
@@ -168,7 +168,7 @@ jobs:
         echo "::set-output name=status::success"
 
     - name: 上传固件在github空间
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: 19.07_firmware_${{ env.FILE_DATE }}
