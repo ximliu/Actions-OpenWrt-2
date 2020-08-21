@@ -112,7 +112,6 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        sed -i 's/bootstrap/Argon/g' openwrt/feeds/luci/modules/luci-base/root/etc/config/luci
         sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' openwrt/package/lean/default-settings/files/zzz-default-settings
         sed -i 's/KERNEL_PATCHVER:=5.4/KERNEL_PATCHVER:=4.19/g' openwrt/target/linux/x86/Makefile
         sed -i 's/KERNEL_TESTING_PATCHVER:=5.4/KERNEL_TESTING_PATCHVER:=4.19/g' openwrt/target/linux/x86/Makefile
@@ -139,7 +138,7 @@ jobs:
         echo "::set-output name=status::success"
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "::set-env name=DEVICE_NAME::_$(cat DEVICE_NAME)"
-        echo "::set-env name=FILE_DATE::$(date "+%Y-%m-%d %H.%I.%S")"
+        echo "::set-env name=FILE_DATE::$(date "+%Y-%m-%d %H.%M.%S")"
 
     - name: 检查github储存空间情况
       if: (!cancelled())
