@@ -79,12 +79,7 @@ jobs:
         rm -fr package/lean/luci-app-flowoffload
         rm -fr package/lean/shortcut-fe/
         rm -fr package/lean/luci-app-sfe/
-        rm -rf package/base-files/files/etc/banner
-        
-
-    - name: 修改“banner”文件
-      run: |
-        cp -f ./banner openwrt/package/base-files/files/etc/
+        rm -rf package/base-files/files/etc/banne
 
     - name: 加载自定义插件设置
       run: |
@@ -115,6 +110,7 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        cp -f ./banner openwrt/package/base-files/files/etc/
         sed -i 's/OpenWrt/281677160/g' openwrt/package/base-files/files/bin/config_generate
      #   sed -i 's/KERNEL_PATCHVER:=4.14/KERNEL_PATCHVER:=4.19/g' openwrt/target/linux/x86/Makefile
      #   sed -i 's/192.168.1.1/192.168.2.2/g' openwrt/package/base-files/files/bin/config_generate
