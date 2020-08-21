@@ -27,7 +27,7 @@ on:
 
 
 #点☆Star触发开始编译
-#  watch:
+  watch:
 #    types: started
 
 
@@ -112,6 +112,7 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        sed -i 's/bootstrap/Argon/g' openwrt/feeds/luci/modules/luci-base/root/etc/config/luci
         sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' openwrt/package/lean/default-settings/files/zzz-default-settings
         sed -i 's/KERNEL_PATCHVER:=5.4/KERNEL_PATCHVER:=4.19/g' openwrt/target/linux/x86/Makefile
         sed -i 's/KERNEL_TESTING_PATCHVER:=5.4/KERNEL_TESTING_PATCHVER:=4.19/g' openwrt/target/linux/x86/Makefile
