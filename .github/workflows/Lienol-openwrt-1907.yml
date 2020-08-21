@@ -82,7 +82,7 @@ jobs:
         rm -rf package/base-files/files/etc/banner
         
 
-    - name: 删除不需要的插件
+    - name: 修改“banner”文件
       run: |
         cp -f ./banner openwrt/package/base-files/files/etc/
 
