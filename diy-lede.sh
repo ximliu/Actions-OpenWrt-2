@@ -6,7 +6,7 @@
 #
 rm -rf ./package/base-files/files/etc/banne && cp -f banner ./package/base-files/files/etc/
 # 修改主机名字，把OpenWrt-123修改你喜欢的就行（不能纯数字或者使用中文）
-sed -i 's/OpenWrt/OpenWrt-123/g' package/base-files/files/bin/config_generate
+sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
 
 
 # 修改openwrt登陆地址,把下面的192.168.2.2修改成你想要的就可以了，其他的不要动
