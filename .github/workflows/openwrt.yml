@@ -42,11 +42,11 @@ env:
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: Lede-54.config
   DIY_OP_SH: diy-lede.sh
-  SSH_ACTIONS: true
-  UPLOAD_BIN_DIR: false
+  SSH_ACTIONS: false
+  UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
-  UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: false
+  UPLOAD_COWTRANSFER: true
+  UPLOAD_WETRANSFER: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -140,19 +140,22 @@ jobs:
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
+        mkdir -p ./artifact/
+        find -name "*combined*img*" | xargs -i mv -f {} ./artifact/
+        find -name "*uefi*img*" | xargs -i mv -f {} ./artifact/
+        find -name "*combined*vmdk*" | xargs -i mv -f {} ./artifact/
 
     - name: 上传固件在github空间
       uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
-        path: ${{ env.FIRMWARE }}
+        path: ./artifact/
 
     - name: 上传固件到cowtransfer网盘
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+        ./transfer cow --block 2621440 -s -p 64 --no-progress artifact 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
 
     - name: 上传固件到WeTransfer网盘
