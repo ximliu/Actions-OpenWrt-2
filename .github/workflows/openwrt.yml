@@ -136,14 +136,11 @@ jobs:
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd openwrt/bin/targets/*/*
         rm -rf packages
-        echo "::set-env name=FIRMWARE::$PWD"
-        echo "::set-output name=status::success"
         mkdir -p ./artifact/
-        find -name "*combined*img*" | xargs -i mv -f {} ./artifact/
-        find -name "*uefi*img*" | xargs -i mv -f {} ./artifact/
-        find -name "*combined*vmdk*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*uefi*img*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*combined*vmdk*" | xargs -i mv -f {} ./artifact/
 
     - name: 上传固件在github空间
       uses: actions/upload-artifact@main
