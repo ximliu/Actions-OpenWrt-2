@@ -43,14 +43,12 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/lean/l
 
 
 #passwall出国软件
-svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-passwall package/lean/luci-app-passwall
-svn co https://github.com/xiaorouji/openwrt-package/trunk/package/brook package/lean/brook
-svn co https://github.com/xiaorouji/openwrt-package/trunk/package/chinadns-ng package/lean/chinadns-ng
-svn co https://github.com/xiaorouji/openwrt-package/trunk/package/tcping package/lean/tcping
-svn co https://github.com/xiaorouji/openwrt-package/trunk/package/trojan-go package/lean/trojan-go
-svn co https://github.com/xiaorouji/openwrt-package/trunk/package/trojan-plus package/lean/trojan-plus
-svn co https://github.com/xiaorouji/openwrt-package/trunk/package/syncthing package/lean/syncthing
-
+git clone https://github.com/xiaorouji/openwrt-package.git
+rm -rf ./openwrt-package/lienol
+rm -rf ./openwrt-package/others/luci-app-control-timewol
+rm -rf ./openwrt-package/others/luci-app-control-webrestriction
+rm -rf ./openwrt-package/others/luci-app-control-weburl
+svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-passwall openwrt-package/luci-app-passwall
 
 # 删除源码argon主题，替换成最新的argon主题
 rm -rf ./package/lean/luci-theme-argon && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/lean/luci-theme-argon
