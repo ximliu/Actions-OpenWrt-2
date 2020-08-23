@@ -95,10 +95,18 @@ jobs:
         git clone https://github.com/garypang13/luci-app-eqos
         git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git
         git clone https://github.com/fw876/helloworld.git
+        svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus
+        svn co https://github.com/fw876/helloworld/trunk/tcping
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/shadowsocksr-libev
-        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/kcptun
-        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/microsocks
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/pdnsd-alt
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/microsocks
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/dns2socks
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/simple-obfs
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/v2ray-plugin
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/v2ray
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/trojan
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipt2socks
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/redsocks2
 
     - name: 下载和安装自定义设置软件
       run: |
