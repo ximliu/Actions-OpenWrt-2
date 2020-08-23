@@ -44,7 +44,7 @@ env:
   DIY_OP_SH: diy-lede.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
-  UPLOAD_FIRMWARE: true
+  UPLOAD_FIRMWARE: false
   UPLOAD_FIRMWARE2: true
   UPLOAD_COWTRANSFER: true
   UPLOAD_WETRANSFER: true
@@ -166,7 +166,7 @@ jobs:
       uses: actions/upload-artifact@main
       if: steps.organizes.outputs.status == 'success' && !cancelled()
       with:
-        name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
+        name: LEDE_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ./artifact/
 
     - name: 上传固件到cowtransfer网盘
