@@ -27,7 +27,7 @@ on:
 
 
 #点☆Star触发开始编译
-#  watch:
+  watch:
 #    types: started
 
 
@@ -98,7 +98,7 @@ jobs:
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/shadowsocksr-libev
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/kcptun
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/microsocks
-        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/v2ray
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/pdnsd-alt
 
     - name: 下载和安装自定义设置软件
       run: |
