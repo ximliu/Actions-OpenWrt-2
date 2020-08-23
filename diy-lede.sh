@@ -48,7 +48,7 @@ rm -rf ./openwrt-package/lienol
 rm -rf ./openwrt-package/others/luci-app-control-timewol
 rm -rf ./openwrt-package/others/luci-app-control-webrestriction
 rm -rf ./openwrt-package/others/luci-app-control-weburl
-svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-passwall openwrt-package/luci-app-passwall
+svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-passwall ./openwrt-package/luci-app-passwall
 
 # 删除源码argon主题，替换成最新的argon主题
 rm -rf ./package/lean/luci-theme-argon && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/lean/luci-theme-argon
