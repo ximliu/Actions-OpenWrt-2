@@ -44,7 +44,7 @@ env:
   DIY_OP_SH: diy-lede.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
-  UPLOAD_FIRMWARE: false
+  UPLOAD_FIRMWARE: true
   UPLOAD_FIRMWARE2: true
   UPLOAD_COWTRANSFER: true
   UPLOAD_WETRANSFER: true
