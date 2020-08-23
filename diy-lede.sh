@@ -45,9 +45,7 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/lean/l
 #passwall出国软件
 svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-passwall package/luci-app-passwall
 svn co https://github.com/xiaorouji/openwrt-package/trunk/others/luci-app-kcptun package/luci-app-kcptun
-svn co https://github.com/xiaorouji/openwrt-package/trunk/obsolete package/
-svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/
-svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/
+svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/package
 
 
 
