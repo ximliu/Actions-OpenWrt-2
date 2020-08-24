@@ -156,6 +156,8 @@ jobs:
         rm -rf ./TXZDGSGJ/
         mkdir -p ./TXZDGSGJ/
         find openwrt/bin/targets/ -name "*combined.vmdk*" | xargs -i mv -f {} ./TXZDGSGJ/
+        find openwrt/bin/targets/ -name "*efi.img*" | xargs -i mv -f {} ./TXZDGSGJ/
+        find openwrt/bin/targets/ -name "*kernel.bin*" | xargs -i mv -f {} ./TXZDGSGJ/
         find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} ./TXZDGSGJ/
         echo "::set-output name=status::success"
 
