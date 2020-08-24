@@ -32,7 +32,7 @@ on:
 
 
 #点☆Star触发开始编译
-#  watch:
+  watch:
 #    types: started
 
 
@@ -42,10 +42,10 @@ env:
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: Lede-54.config
   DIY_OP_SH: diy-lede.sh
-  SSH_ACTIONS: false
+  SSH_ACTIONS: true
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
-  UPLOAD_FIRMWARE2: true
+  UPLOAD_TXZDGS: true
   UPLOAD_COWTRANSFER: true
   UPLOAD_WETRANSFER: true
   TZ: Asia/Shanghai
@@ -150,29 +150,29 @@ jobs:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
-
-    - name: 整理固件文件夹
+    - name: 挑选指定格式固件
       id: organizes
-      if: env.UPLOAD_FIRMWARE2 == 'true' && !cancelled()
+      if: env.UPLOAD_TXZDGS == 'true' && !cancelled()
       run: |
-        rm -rf ./artifact/
-        mkdir -p ./artifact/
-        find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} ./artifact/
-        find openwrt/bin/targets/ -name "*openwrt-x86-64-generic-squashfs-combined.vmdk*" | xargs -i mv -f {} ./artifact/
+        rm -rf ./TXZDGS/
+        mkdir -p ./TXZDGS/
+        find openwrt/bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./TXZDGS/
+        find openwrt/bin/targets/ -name "*uefi*img*" | xargs -i mv -f {} ./TXZDGS/
+        find openwrt/bin/targets/ -name "*combined*vmdk*" | xargs -i mv -f {} ./TXZDGS/
         echo "::set-output name=status::success"
 
-    - name: 上传固件在github空间
+    - name: 上传指定格式固件在github空间
       uses: actions/upload-artifact@main
       if: steps.organizes.outputs.status == 'success' && !cancelled()
       with:
         name: LEDE_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
-        path: ./artifact/
+        path: ./TXZDGS/
 
-    - name: 上传固件到cowtransfer网盘
+    - name: 上传指定格式固件到cowtransfer网盘
       if: steps.organizes.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ./artifact/ 2>&1 | tee cowtransfer.log
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ./TXZDGS/ 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
 
     - name: 上传固件到WeTransfer网盘
