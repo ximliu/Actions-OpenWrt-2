@@ -44,8 +44,7 @@ env:
   DIY_OP_SH: diy-lede.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
-  UPLOAD_FIRMWARE: false
-  UPLOAD_TXZDGSGJ: true
+  UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: true
   TZ: Asia/Shanghai
@@ -134,7 +133,6 @@ jobs:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: openwrt/bin
 
-
     - name: 整理固件文件夹
       id: organize
       run: |
@@ -142,6 +140,11 @@ jobs:
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
+        rm -rf ./paoqi/
+        mkdir -p ./paoqi/
+        find openwrt/bin/targets/ -name "*sha256sums*" | xargs -i mv -f {} ./paoqi/
+        find openwrt/bin/targets/ -name "*version.buildinfo*" | xargs -i mv -f {} ./paoqi/
+        find openwrt/bin/targets/ -name "*feeds.buildinfo*" | xargs -i mv -f {} ./paoqi/
 
     - name: 上传固件在github空间
       uses: actions/upload-artifact@main
@@ -150,29 +153,11 @@ jobs:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
-    - name: 自行挑选指定格式固件
-      id: organizes
-      run: |
-        rm -rf ./TXZDGSGJ/
-        mkdir -p ./TXZDGSGJ/
-        find openwrt/bin/targets/ -name "*combined.vmdk*" | xargs -i mv -f {} ./TXZDGSGJ/
-        find openwrt/bin/targets/ -name "*efi.img*" | xargs -i mv -f {} ./TXZDGSGJ/
-        find openwrt/bin/targets/ -name "*kernel.bin*" | xargs -i mv -f {} ./TXZDGSGJ/
-        find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} ./TXZDGSGJ/
-        echo "::set-output name=status::success"
-
-    - name: 上传指定格式固件在github空间
-      uses: actions/upload-artifact@main
-      if: steps.organizes.outputs.status == 'success' && env.UPLOAD_TXZDGSGJ == 'true' && !cancelled()
-      with:
-        name: LEDE_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
-        path: ./TXZDGSGJ/
-
-    - name: 上传指定格式固件到cowtransfer网盘
-      if: steps.organizes.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+    - name: 上传固件到cowtransfer网盘
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ./TXZDGSGJ/ 2>&1 | tee cowtransfer.log
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
 
     - name: 上传固件到WeTransfer网盘
