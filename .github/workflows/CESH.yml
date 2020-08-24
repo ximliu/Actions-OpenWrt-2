@@ -3,15 +3,15 @@ name: OpenWrt-x86-64-Lean
 
 on:
 # 定时触发(每周一早5点)
-  schedule:
-    - cron: 0 21 * * 1
+#  schedule:
+#    - cron: 0 21 * * 1
 
 # release触发
   release:
     types: [published]
 
 # 点赞触发
-  watch:
+#  watch:
 #    types: [started]
 
 # 编辑触发
