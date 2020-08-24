@@ -4,8 +4,6 @@
 # 说明：
 # 除了第一行的#!/bin/bash不要动，其他的设置，前面带#表示不起作用，不带的表示起作用了（根据你自己需要打开或者关闭）
 #
-rm -rf ./package/base-files/files/etc/banner
-cp -f .../Actions-OpenWrt/banner package/base-files/files/etc/
 
 # 修改主机名字，把OpenWrt-123修改你喜欢的就行（不能纯数字或者使用中文）
 sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
