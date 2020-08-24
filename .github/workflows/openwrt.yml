@@ -157,9 +157,8 @@ jobs:
       run: |
         rm -rf ./artifact/
         mkdir -p ./artifact/
-        find openwrt/bin/targets/ -name "*config*buildinfo*" | xargs -i mv -f {} ./artifact/
-        find openwrt/bin/targets/ -name "*combined*vmdk*" | xargs -i mv -f {} ./artifact/
-        find openwrt/bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*openwrt-x86-64-generic-squashfs-combined.vmdk*" | xargs -i mv -f {} ./artifact/
         echo "::set-output name=status::success"
 
     - name: 上传固件在github空间
