@@ -157,7 +157,6 @@ jobs:
         rm -rf ./TXZDGS/
         mkdir -p ./TXZDGS/
         find openwrt/bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./TXZDGS/
-        find openwrt/bin/targets/ -name "*uefi*img*" | xargs -i mv -f {} ./TXZDGS/
         find openwrt/bin/targets/ -name "*combined*vmdk*" | xargs -i mv -f {} ./TXZDGS/
         echo "::set-output name=status::success"
 
