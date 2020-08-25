@@ -135,19 +135,17 @@ jobs:
 
     - name: 整理固件文件夹
       id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-
-
-
-
+        cd openwrt/bin/targets/*/*
         rm -rf packages
+        find openwrt/bin/targets/ -name "*sha256sums*" | rm -f {} \;
+        find openwrt/bin/targets/ -name "*version.buildinfo*" | rm -f {} \;
+        find openwrt/bin/targets/ -name "*feeds.buildinfo*" | rm -f {} \;
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
-        mkdir -p ./paoqi/
-        find openwrt/bin/targets/ -name "*sha256sums*" | xargs -i mv -f {} ./paoqi/
-        find openwrt/bin/targets/ -name "*version.buildinfo*" | xargs -i mv -f {} ./paoqi/
-        find openwrt/bin/targets/ -name "*feeds.buildinfo*" | xargs -i mv -f {} ./paoqi/
-
+        
+        
     - name: 上传固件在github空间
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
