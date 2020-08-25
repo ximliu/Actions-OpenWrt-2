@@ -43,11 +43,5 @@ git clone https://github.com/jerrykuku/node-request.git package/lean/node-reques
 git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/lean/luci-app-jd-dailybonus  #京东签到
 svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-passwall package/lean/luci-app-passwall  #passwall出国软件
 svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/lean/package  #passwall出国软件依赖
-
-
-# 删除源码argon主题，替换成最新的argon主题
-rm -rf ./package/lean/luci-theme-argon && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/lean/luci-theme-argon
-#全新的[argon-主题]登录界面,图片背景跟随Bing.com，每天自动切换
-#增加可自定义登录背景功能，可用WinSCP将文件上传到/www/luci-static/argon/background 目录下，支持jpg png gif格式图片
-#主题将会优先显示自定义背景，多个背景为随机显示，系统默认依然为从bing获取
-#增加了可以强制锁定暗色模式的功能，如果需要，请登录ssh 输入：touch /etc/dark 即可开启，关闭请输入：rm -rf /etc/dark，关闭后颜色模式为跟随系统
+rm -rf ./package/lean/luci-theme-argon && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/lean/luci-theme-argon  #新的argon主题
+#全新的[argon-主题]此主题玩法很多,这里看说明【https://github.com/jerrykuku/luci-theme-argon/blob/18.06/README_ZH.md】
