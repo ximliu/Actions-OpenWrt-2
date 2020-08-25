@@ -143,6 +143,7 @@ jobs:
         find openwrt/bin/targets/ -name "*sha256sums*" | xargs -i mv -f {} ./artifact/
         find openwrt/bin/targets/ -name "*feeds.buildinfo*" | xargs -i mv -f {} ./artifact/
         find openwrt/bin/targets/ -name "*version.buildinfo*" | xargs -i mv -f {} ./artifact/
+        rm -rf artifact
         cd openwrt/bin/targets/*/*
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
