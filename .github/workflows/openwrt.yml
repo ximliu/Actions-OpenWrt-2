@@ -140,9 +140,9 @@ jobs:
         cd openwrt/bin/targets/*/*
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
-        find ${FIRMWARE} -name "*sha256sums*" | rm -f {} \;
-        find ${FIRMWARE} -name "*version.buildinfo*" | rm -f {} \;
-        find ${FIRMWARE} -name "*feeds.buildinfo*" | rm -f {} \;
+        find -name "*sha256sums*" | rm -f {} \;
+        find -name "*version.buildinfo*" | rm -f {} \;
+        find -name "*feeds.buildinfo*" | rm -f {} \;
         echo "::set-output name=status::success"
         
         
