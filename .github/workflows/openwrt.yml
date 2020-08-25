@@ -139,7 +139,6 @@ jobs:
       run: |
         cd openwrt/bin/targets/*/*
         rm -rf packages
-        echo "::set-env name=FIRMWARE::$PWD"
         mkdir -p ./sc/
         find -name "*.manifest*" | xargs -i mv -f {} ./sc/
         find -name "*.bin*" | xargs -i mv -f {} ./sc/
@@ -148,6 +147,7 @@ jobs:
         find -name "*feeds.buildinfo*" | xargs -i mv -f {} ./sc/
         find -name "*version.buildinfo*" | xargs -i mv -f {} ./sc/
         rm -rf ./sc/
+        echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
         
     - name: 上传固件在github空间
