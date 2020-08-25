@@ -140,11 +140,11 @@ jobs:
         cd openwrt/bin/targets/*/*
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
-        find -name "*sha256sums*" | rm -f {} \;
-        find -name "*version.buildinfo*" | rm -f {} \;
-        find -name "*feeds.buildinfo*" | rm -f {} \;
+        mkdir -p ./sc/
+        find openwrt/bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./sc/
+        find openwrt/bin/targets/ -name "*uefi*img*" | xargs -i mv -f {} ./sc/
+        rm -rf ./sc/
         echo "::set-output name=status::success"
-        
         
     - name: 上传固件在github空间
       uses: actions/upload-artifact@main
