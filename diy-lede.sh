@@ -4,8 +4,9 @@
 # 说明：
 # 除了第一行的#!/bin/bash不要动，其他的设置，前面带#表示不起作用，不带的表示起作用了（根据你自己需要打开或者关闭）
 #
-echo '修改机器名称'
+echo '“banner”'
 rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./banner openwrt/package/base-files/files/etc/ && cd openwrt
+
 
 echo '修改机器名称'
 sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
@@ -13,6 +14,7 @@ sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
 
 echo '修改登陆IP'
 sed -i 's/192.168.1.1/192.168.2.2/g' ./package/base-files/files/bin/config_generate
+
 
 echo '设置密码为空'
 sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' ./package/lean/default-settings/files/zzz-default-settings
