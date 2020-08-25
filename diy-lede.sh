@@ -4,7 +4,7 @@
 # 说明：
 # 除了第一行的#!/bin/bash不要动，其他的设置，前面带#表示不起作用，不带的表示起作用了（根据你自己需要打开或者关闭）
 #
-echo '“banner”'
+echo '“修改banner”'
 rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./banner openwrt/package/base-files/files/etc/ && cd openwrt
 
 
