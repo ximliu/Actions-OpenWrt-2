@@ -138,15 +138,14 @@ jobs:
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd openwrt/bin/targets/*/*
+        find -name "*manifest*" | xargs -i mv -f {} ./packages/
+        find -name "*bin*" | xargs -i mv -f {} ./packages/
+        find -name "*efi.vmdk*" | xargs -i mv -f {} ./packages/
+        find -name "*rootfs.img*" | xargs -i mv -f {} ./packages/
+        find -name "*sha256sums*" | xargs -i mv -f {} ./packages/
+        find -name "*feeds.buildinfo*" | xargs -i mv -f {} ./packages/
+        find -name "*version.buildinfo*" | xargs -i mv -f {} ./packages/
         rm -rf packages
-        mkdir -p ./sc/
-        find -name "*.manifest*" | xargs -i mv -f {} ./sc/
-        find -name "*.bin*" | xargs -i mv -f {} ./sc/
-        find -name "*efi.vmdk*" | xargs -i mv -f {} ./sc/
-        find -name "*sha256sums*" | xargs -i mv -f {} ./sc/
-        find -name "*feeds.buildinfo*" | xargs -i mv -f {} ./sc/
-        find -name "*version.buildinfo*" | xargs -i mv -f {} ./sc/
-        rm -rf ./sc/
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
         
