@@ -136,11 +136,13 @@ jobs:
     - name: 整理固件文件夹
       id: organize
       run: |
-        cd openwrt/bin/targets/*/*
+
+
+
+
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
-        rm -rf ./paoqi/
         mkdir -p ./paoqi/
         find openwrt/bin/targets/ -name "*sha256sums*" | xargs -i mv -f {} ./paoqi/
         find openwrt/bin/targets/ -name "*version.buildinfo*" | xargs -i mv -f {} ./paoqi/
