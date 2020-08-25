@@ -135,15 +135,14 @@ jobs:
     - name: 整理固件文件夹
       id: organize
       run: |
-        cd openwrt/bin/targets/
         mkdir -p ./artifact/
-        find -name "*.manifest*" | xargs -i mv -f {} ./artifact/
-        find -name "*.bin*" | xargs -i mv -f {} ./artifact/
-        find -name "*efi.vmdk*" | xargs -i mv -f {} ./artifact/
-        find -name "*rootfs.img*" | xargs -i mv -f {} ./artifact/
-        find -name "*sha256sums*" | xargs -i mv -f {} ./artifact/
-        find -name "*feeds.buildinfo*" | xargs -i mv -f {} ./artifact/
-        find -name "*version.buildinfo*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*.manifest*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*.bin*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*efi.vmdk*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*rootfs.img*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*sha256sums*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*feeds.buildinfo*" | xargs -i mv -f {} ./artifact/
+        find openwrt/bin/targets/ -name "*version.buildinfo*" | xargs -i mv -f {} ./artifact/
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
         
