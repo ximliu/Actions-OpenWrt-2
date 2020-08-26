@@ -136,6 +136,8 @@ jobs:
       id: organizer
       run: |
         cd openwrt/bin/targets/*/*
+        rm -rf packages
+        mkdir -p ./packages/
         find ./ -name "*.manifest*" | xargs -i mv -f {} ./packages/
         find ./ -name "*.bin*" | xargs -i mv -f {} ./packages/
         find ./ -name "*efi.vmdk*" | xargs -i mv -f {} ./packages/
