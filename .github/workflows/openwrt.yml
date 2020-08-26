@@ -6,7 +6,7 @@
 # <https://github.com/P3TERX/Actions-OpenWrt.git>
 #
 #修改以下代码或者开启触发开关都好，要严格按格式对好,前面有多少空格也要看清楚
-#
+#代码里有 name: 后面的内容随便改,冒号前面是有个空格的,如果修改固件文件夹名字就要考虑固件文件夹能不能显示出你想要的 
 
 name: Lede111-OpenWrt 固件
 
@@ -26,7 +26,7 @@ on:
 #    types: published
 
 
-#定时触发开始编译(utc時間)(开启定时编译请先关闭SSH,要不然SSH没人管,会卡SSH编译失败)
+#定时触发开始编译(开启定时编译请先关闭SSH,要不然SSH没人管,会卡SSH编译失败)
 #  schedule:
 #    - cron: 0 8 */9 * *
 
