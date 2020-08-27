@@ -134,28 +134,20 @@ jobs:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: openwrt/bin
 
-    - name: 整理固件文件夹
+    - name: 整理文件
       id: organizer
       run: |
-        cd openwrt/bin/targets/*/*
-        rm -rf packages && mkdir packages
-        find -name "*feeds.buildinfo*" | xargs -i mv -f {} packages
-        find -name "*version.buildinfo*" | xargs -i mv -f {} packages
-        find -name "*sha256sums*" | xargs -i mv -f {} packages
-        find -name "*.manifest*" | xargs -i mv -f {} packages
-        find -name "*.bin*" | xargs -i mv -f {} packages
-        find -name "*efi.vmdk*" | xargs -i mv -f {} packages
-        find -name "*rootfs.img*" | xargs -i mv -f {} packages
-        rm -rf packages
-        echo "::set-env name=FIRMWARE::$PWD"
-        echo "::set-output name=status::success"
+          rm -rf ./artifact/
+          mkdir -p ./artifact/
+          find openwrt/bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./artifact/
+          find openwrt/bin/targets/ -name "*uefi*img*" | xargs -i mv -f {} ./artifact/
         
     - name: 上传固件在github空间
       uses: actions/upload-artifact@main
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
-        path: ${{ env.FIRMWARE }}
+        path: ./artifact/
 
     - name: Create release
       uses: ncipollo/release-action@v1
@@ -167,7 +159,7 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: Lede111-OpenWrt 固件         
-        artifacts: ${FIRMWARE}
+        artifacts: ./artifact/
 
     - name: 上传固件到cowtransfer网盘
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
