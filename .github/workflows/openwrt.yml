@@ -162,9 +162,9 @@ jobs:
       uses: ncipollo/release-action@v1
       if: env.UPLOAD_RELEASE == 'true' && steps.organizer.outputs.status == 'success' && !cancelled()
       with:
-        name: ${{ env.DATE }} 🚀 x86-64 | 自动编译
+        name: ${{ env.DATE }} 🚀 Lede111-OpenWrt 固件 | 自动编译
         allowUpdates: true
-        tag: x86-64
+        tag: Lede111-OpenWrt 固件
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: Lede111-OpenWrt 固件         
