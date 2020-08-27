@@ -167,7 +167,7 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: Lede111-OpenWrt 固件         
-        artifacts: ${{ env.FIRMWARE }}/*
+        artifacts: ${FIRMWARE}
 
     - name: 上传固件到cowtransfer网盘
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
