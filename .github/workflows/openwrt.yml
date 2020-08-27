@@ -122,7 +122,6 @@ jobs:
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "::set-env name=DEVICE_NAME::_$(cat DEVICE_NAME)"
         echo "::set-env name=FILE_DATE::$(date "+%Y-%m-%d %H.%M.%S")"
-        echo "::set-env name=DATE::$(date "+%Y-%m-%d·%H:%M:%S")"
 
     - name: 检查github储存空间情况
       if: (!cancelled())
@@ -160,9 +159,9 @@ jobs:
 
     - name: Create release
       uses: ncipollo/release-action@v1
-      if: env.UPLOAD_RELEASE == 'true' && steps.organizer.outputs.status == 'success' && !cancelled()
+      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        name: ${{ env.DATE }} 🚀 Lede111-OpenWrt 固件 | 自动编译
+        name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         allowUpdates: true
         tag: Lede111-OpenWrt 固件
         commit: master
