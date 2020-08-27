@@ -162,7 +162,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.YOURTOKEN }}
-        file: ${{ env.FIRMWARE }}
+        file: ${FIRMWARE}
         tag: ${{ github.ref }}
         file_glob: true
 
