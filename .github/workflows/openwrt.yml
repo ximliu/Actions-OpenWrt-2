@@ -149,8 +149,6 @@ jobs:
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
-        release_tag="Lede111-OpenWrt ${{ env.DATE }}"
-        echo "##[set-output name=Release_tag;]$release_tag"
         
     - name: 上传固件在github空间
       uses: actions/upload-artifact@main
@@ -158,22 +156,6 @@ jobs:
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
-
-
-    - name: Create release
-      id: create_release
-      uses: ncipollo/release-action@v1.6.1
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      with:
-        name: Lede111-OpenWrt固件
-        allowUpdates: true
-        tag: OpenWrt
-        commit: master
-        replacesArtifacts: true
-        token: ${{ secrets.RELEASES_TOKEN }}
-        bodyFile: "README.md"
-        artifacts: ${{ env.FIRMWARE }}/*.zip
-
 
     - name: 上传固件到cowtransfer网盘
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
