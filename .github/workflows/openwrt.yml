@@ -122,6 +122,7 @@ jobs:
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "::set-env name=DEVICE_NAME::_$(cat DEVICE_NAME)"
         echo "::set-env name=FILE_DATE::$(date "+%Y-%m-%d %H.%M.%S")"
+        echo "::set-env name=DATE::$(date "+%Y-%m-%d·%H:%M:%S")"
 
     - name: 检查github储存空间情况
       if: (!cancelled())
@@ -157,14 +158,17 @@ jobs:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
-    - name: Upload release asset
-      if: github.event == 'release'
-      uses: svenstaro/upload-release-action@v2
+    - name: Create release
+      uses: ncipollo/release-action@v1
+      if: env.UPLOAD_RELEASE == 'true' && steps.organizer.outputs.status == 'success' && !cancelled()
       with:
-        repo_token: ${{ secrets.YOURTOKEN }}
-        file: ${FIRMWARE}
-        tag: ${{ github.ref }}
-        file_glob: true
+        name: ${{ env.DATE }} 🚀 x86-64 | 自动编译
+        allowUpdates: true
+        tag: x86-64
+        commit: master
+        token: ${{ secrets.RELEASES_TOKEN }}
+        body: Lede111-OpenWrt 固件         
+        artifacts: ${{ env.FIRMWARE }}/*
 
     - name: 上传固件到cowtransfer网盘
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
