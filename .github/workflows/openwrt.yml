@@ -157,6 +157,15 @@ jobs:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
+    - name: Upload release asset
+      if: github.event == 'release'
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.YOURTOKEN }}
+        file: ${FIRMWARE}
+        tag: ${{ github.ref }}
+        file_glob: true
+
     - name: 上传固件到cowtransfer网盘
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
       run: |
