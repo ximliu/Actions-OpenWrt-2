@@ -89,6 +89,7 @@ jobs:
 
     - name: 下载源跟安装自定义插件
       run: |
+        cd openwrt
         ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
