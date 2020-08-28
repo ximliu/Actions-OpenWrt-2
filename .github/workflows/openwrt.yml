@@ -141,11 +141,6 @@ jobs:
         rm -rf packages && mkdir packages
         find -name "*feeds.buildinfo*" | xargs -i mv -f {} packages
         find -name "*version.buildinfo*" | xargs -i mv -f {} packages
-        find -name "*sha256sums*" | xargs -i mv -f {} packages
-        find -name "*.manifest*" | xargs -i mv -f {} packages
-        find -name "*rootfs-squashfs.img*" | xargs -i mv -f {} packages
-        find -name "*efi.vmdk*" | xargs -i mv -f {} packages
-        find -name "*vmlinuz*" | xargs -i mv -f {} packages
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
