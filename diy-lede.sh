@@ -46,6 +46,9 @@ svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-passwa
 svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/xiaorouji/package  #passwall出国软件依赖
 git clone https://github.com/rufengsuixing/luci-app-adguardhome.git package/lean/luci-app-adguardhome  #adguardhome
 
+git clone https://github.com/lisaac/luci-app-dockerman.git package/lean/luci-app-dockerman
+git clone https://github.com/lisaac/luci-lib-docker.git package/lean/luci-lib-docker
+
 git clone https://github.com/lwz322/luci-app-k3screenctrl.git package/k3/luci-app-k3screenctrl  #k3屏幕（其他路由器不需要）
 git clone https://github.com/lwz322/k3screenctrl_build.git package/k3/k3screenctrl_build  #k3屏幕依赖（其他路由器不需要）
 git clone https://github.com/lwz322/k3screenctrl.git package/k3/k3screenctrl  #k3组件（其他路由器不需要）
