@@ -136,18 +136,20 @@ jobs:
         path: openwrt/bin
 
 
-    - name: 整理文件
+    - name: 提取.config文件
       id: organize
       run: |
-          rm -rf ./artifact/
-          mkdir -p ./artifact/
-          find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} ./artifact/
-    - 
+        cd openwrt/bin/targets
+        rm -rf config && mkdir config
+        find -name "*config.buildinfo*" | xargs -i mv -f {} config
+        echo "::set-env name=CONFIG::$PWD"
+        echo "::set-output name=status::success"
+    - name: 上传.config文件 
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_CONFIG == 'true' && !cancelled()
       with:
         name: config.buildinfo
-        path: ./artifact/
+        path: ${{ env.CONFIG }}
 
 
 
