@@ -139,7 +139,7 @@ jobs:
     - name: 上传.config配置到github空间
       if: env.UPLOAD_CONFIG == 'true' && !cancelled()
       run: |
-        cd openwrt/bin/targets/
+        cd openwrt/bin/targets
         rm -rf config && mkdir config
         find -name "*config.buildinfo*" | xargs -i mv -f {} config
         echo "::set-env name=CONFIG::$PWD"
