@@ -142,10 +142,11 @@ jobs:
         cd openwrt/bin/targets/
         rm -rf config && mkdir config
         find -name "*config.buildinfo*" | xargs -i mv -f {} config
+        echo "::set-env name=CONFIG::$PWD"
         uses: actions/upload-artifact@main
         with:
           name: config.buildinfo
-          path: ./config/
+          path: ${{ env.CONFIG }}
 
 
     - name: 整理固件文件夹
