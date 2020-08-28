@@ -27,14 +27,14 @@ on:
 
 
 #点☆Star触发开始编译
-  watch:
+#  watch:
 #    types: started
 
 
 env:
   REPO_URL: https://github.com/Lienol/openwrt
   REPO_BRANCH: dev-19.07
-  CONFIG_FILE: xink3.config
+  CONFIG_FILE: Lienol-1907.config
   SSH_ACTIONS: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
