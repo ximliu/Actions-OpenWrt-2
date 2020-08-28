@@ -134,6 +134,20 @@ jobs:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: openwrt/bin
 
+
+    - name: 上传.config配置到github空间
+      id: organize
+      if: env.UPLOAD_CONFIG == 'true' && !cancelled()
+      run: |
+          rm -rf ./artifact/
+          mkdir -p ./artifact/
+          find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} ./artifact/
+          uses: actions/upload-artifact@main
+          with:
+            name: config.buildinfo
+            path: ./artifact/
+
+
     - name: 整理固件文件夹
       id: organizer
       run: |
