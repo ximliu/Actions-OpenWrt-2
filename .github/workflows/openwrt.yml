@@ -137,16 +137,15 @@ jobs:
 
 
     - name: 上传.config配置到github空间
-      id: organize
       if: env.UPLOAD_CONFIG == 'true' && !cancelled()
       run: |
-          rm -rf ./artifact/
-          mkdir -p ./artifact/
-          find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} ./artifact/
-          uses: actions/upload-artifact@main
-          with:
-            name: config.buildinfo
-            path: ./artifact/
+        cd openwrt/bin/targets/
+        rm -rf config && mkdir config
+        find -name "*config.buildinfo*" | xargs -i mv -f {} config
+        uses: actions/upload-artifact@main
+        with:
+          name: config.buildinfo
+          path: ./config/
 
 
     - name: 整理固件文件夹
