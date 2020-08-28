@@ -120,11 +120,11 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        cp -f ./banner package/base-files/files/etc/
+        cp -f ./banner openwrt/package/base-files/files/etc/
         cd openwrt
-        sed -i 's/OpenWrt/OpenWrt-123/g' package/base-files/files/bin/config_generate
-        sed -i '/<div class="tr"><div class="td left" width="33%"><%:Kernel Version%></div><div class="td left"><%=unameinfo.release or "?"%></div></div>/a <div class="tr"><div class="td left" width="33%"><%:CPU Temperature%></div><div class="td left"><%=luci.sys.exec("cut -c1-2 /sys/class/thermal/thermal_zone0/temp")%></div></div>' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
-        sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' target/linux/bcm53xx/image/Makefile
+        sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
+        sed -i '/<div class="tr"><div class="td left" width="33%"><%:Kernel Version%></div><div class="td left"><%=unameinfo.release or "?"%></div></div>/a <div class="tr"><div class="td left" width="33%"><%:CPU Temperature%></div><div class="td left"><%=luci.sys.exec("cut -c1-2 /sys/class/thermal/thermal_zone0/temp")%></div></div>' ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+        sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' ./target/linux/bcm53xx/image/Makefile
 
     - name: SSH远程连接服务器配置固件
       uses: P3TERX/debugger-action@main
