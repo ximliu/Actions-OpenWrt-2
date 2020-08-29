@@ -41,8 +41,8 @@ env:
   REPO_URL: https://github.com/project-openwrt/openwrt
   REPO_BRANCH: openwrt-18.06
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: project.config
-  DIY_OP_SH: project.sh
+  CONFIG_FILE: project-419.config
+  DIY_OP_SH: project-419.sh
   SSH_ACTIONS: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
