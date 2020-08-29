@@ -77,9 +77,9 @@ jobs:
         cd openwrt
         rm -rf package/lean/luci-theme-argon
         rm -rf package/base-files/files/etc/banne
-        rm -rf openwrt-package/others/luci-app-control-timewol
-        rm -rf openwrt-package/others/luci-app-control-webrestriction
-        rm -rf openwrt-package/others/luci-app-control-weburl
+        rm -rf feeds/diy1/others/luci-app-control-timewol
+        rm -rf feeds/diy1/others/luci-app-control-webrestriction
+        rm -rf feeds/diy1/others/luci-app-control-weburl
         rm -rf package/diy/OpenAppFilter
 
     - name: 加载自定义插件设置
