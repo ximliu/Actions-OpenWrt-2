@@ -72,16 +72,6 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-    - name: 删除不需要的插件
-      run: |
-        cd openwrt
-        rm -rf package/lean/luci-theme-argon
-        rm -rf package/base-files/files/etc/banne
-        rm -rf feeds/diy1/others/luci-app-control-timewol
-        rm -rf feeds/diy1/others/luci-app-control-webrestriction
-        rm -rf feeds/diy1/others/luci-app-control-weburl
-        rm -rf package/diy/OpenAppFilter
-
     - name: 加载自定义插件设置
       run: |
         cd openwrt/package/diy/
@@ -115,6 +105,16 @@ jobs:
         ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+
+    - name: 删除不需要的插件
+      run: |
+        cd openwrt
+        rm -rf package/lean/luci-theme-argon
+        rm -rf package/base-files/files/etc/banne
+        rm -rf feeds/diy1/others/luci-app-control-timewol
+        rm -rf feeds/diy1/others/luci-app-control-webrestriction
+        rm -rf feeds/diy1/others/luci-app-control-weburl
+        rm -rf package/diy/OpenAppFilter
 
     - name: 加载Lienol-19.07.config，修改IP和内核
       run: |
