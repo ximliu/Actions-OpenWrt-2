@@ -17,5 +17,9 @@ sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
 sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' ./package/lean/default-settings/files/zzz-default-settings
 
 
-#修改内核版本
+# 修改内核版本
 #sed -i 's/KERNEL_PATCHVER:=4.19/KERNEL_PATCHVER:=4.9/g' ./target/linux/x86/Makefile
+
+
+# 删除已知的重复文件
+rm -rf ./package/lienol/luci-app-timecontrol
