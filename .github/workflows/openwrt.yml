@@ -9,7 +9,7 @@
 #代码里有 name: 后面的内容随便改,冒号后面是有个空格的,如果修改固件名字就要考虑能不能显示出你想要的
 
 
-name: Lede111-OpenWrt 固件
+name: CeShi-OpenWrt 固件
 
 on:
   repository_dispatch:
@@ -41,8 +41,8 @@ env:
   REPO_URL: https://github.com/project-openwrt/openwrt
   REPO_BRANCH: openwrt-18.06
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: k3.config
-  DIY_OP_SH: diy-lede.sh
+  CONFIG_FILE: CeShi.config
+  DIY_OP_SH: CeShi.sh
   SSH_ACTIONS: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -52,7 +52,7 @@ env:
 
 jobs:
   build:
-    name: 编译OpenWrt-lede固件
+    name: 编译OpenWrt-CeShi固件
     runs-on: ubuntu-18.04
     if: github.event.repository.owner.id == github.event.sender.id
 
