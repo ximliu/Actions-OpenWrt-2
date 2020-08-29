@@ -33,13 +33,13 @@ on:
 
 
 #点☆Star触发开始编译
-  watch:
+#  watch:
 #    types: started
 
 
 env:
   REPO_URL: https://github.com/project-openwrt/openwrt
-  REPO_BRANCH: openwrt-18.06-dev
+  REPO_BRANCH: openwrt-18.06
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: project-419.config
   DIY_OP_SH: project-419.sh
@@ -131,7 +131,7 @@ jobs:
       uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
-        name: OpenWrt_bin${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
+        name: Project_bin${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: openwrt/bin
 
     - name: 整理固件文件夹
@@ -149,7 +149,7 @@ jobs:
       uses: actions/upload-artifact@main
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
-        name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
+        name: Project_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
     - name: 上传固件到cowtransfer网盘
