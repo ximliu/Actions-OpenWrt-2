@@ -77,7 +77,10 @@ jobs:
         cd openwrt
         rm -rf package/lean/luci-theme-argon
         rm -rf package/base-files/files/etc/banne
-        rm -rf package/lean/k3screenctrl
+        rm -rf openwrt-package/others/luci-app-control-timewol
+        rm -rf openwrt-package/others/luci-app-control-webrestriction
+        rm -rf openwrt-package/others/luci-app-control-weburl
+        rm -rf package/diy/OpenAppFilter
 
     - name: 加载自定义插件设置
       run: |
@@ -105,9 +108,6 @@ jobs:
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/trojan
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipt2socks
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/redsocks2
-        git clone https://github.com/lwz322/luci-app-k3screenctrl.git
-        git clone https://github.com/lwz322/k3screenctrl.git
-        git clone https://github.com/lwz322/k3screenctrl_build.git
 
     - name: 下载和安装自定义设置软件
       run: |
@@ -123,7 +123,6 @@ jobs:
         cp -f ./banner openwrt/package/base-files/files/etc/
         cd openwrt
         sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
-        sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' ./target/linux/bcm53xx/image/Makefile
 
     - name: SSH远程连接服务器配置固件
       uses: P3TERX/debugger-action@main
