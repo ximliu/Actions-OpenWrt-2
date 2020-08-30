@@ -23,7 +23,3 @@ sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' ./package/lean/default-settings/files/z
 
 # 删除已知的重复文件
 rm -rf ./package/lienol/luci-app-timecontrol
-
-
-#git clone https://github.com/lwz322/k3screenctrl.git package/ctcgfw/k3screenctrl  #k3屏幕依赖（其他路由器不需要）
-#sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' ./target/linux/bcm53xx/image/Makefile
