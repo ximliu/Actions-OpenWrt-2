@@ -45,7 +45,7 @@ env:
   DIY_OP_SH: CeShi.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
-  UPLOAD_CONFIG: false
+  UPLOAD_CONFIG: true
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
@@ -139,11 +139,12 @@ jobs:
       run: |
           rm -rf config && mkdir config
           find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} config
-          if: env.UPLOAD_CONFIG == 'true' && !cancelled()
-          uses: actions/upload-artifact@main
-          with:
-            name: ${{ env.DEVICE_NAME }}_config_${{ env.FILE_DATE }}
-            path: ./config
+    - name: 提取.config配置文件          
+      if: env.UPLOAD_CONFIG == 'true' && !cancelled()
+      uses: actions/upload-artifact@main
+      with:
+        name: ${{ env.DEVICE_NAME }}_config_${{ env.FILE_DATE }}
+        path: ./config
 
 
     - name: 整理固件文件夹
