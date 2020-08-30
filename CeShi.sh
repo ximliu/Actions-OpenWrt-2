@@ -14,7 +14,7 @@ sed -i 's/192.168.1.1/192.168.2.2/g' ./package/base-files/files/bin/config_gener
 sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
 
 
-sed -i 's/TARGET_DEVICES += generic/TARGET_DEVICES += win-x86-64/g' ./target/linux/x86/image/generic.mk
+sed -i 's/TARGET_DEVICES += generic/TARGET_DEVICES += win-x86-64/g' ./target/linux/x86/image/64.mk.mk
 
 
 # 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
