@@ -43,7 +43,7 @@ env:
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: CeShi.config
   DIY_OP_SH: CeShi.sh
-  SSH_ACTIONS: true
+  SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_CONFIG: true
   UPLOAD_FIRMWARE: true
@@ -91,7 +91,6 @@ jobs:
     - name: 下载feeds跟安装自定义插件
       run: |
         cd openwrt
-        ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
@@ -136,19 +135,17 @@ jobs:
         path: openwrt/bin
 
 
-    - name: 提取.config文件
-      id: organize
+    - name: 整理文件
       run: |
-        cd openwrt/bin/targets
-        rm -rf config && mkdir config
-        find -name "*config.buildinfo*" | xargs -i mv -f {} config
-        echo "::set-output name=status::success"
-    - name: 上传.config文件 
+          rm -rf ./artifact/
+          mkdir -p ./artifact/
+          find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} ./artifact/
+    - name: 上传固件
+      if: env.UPLOAD_CONFIG == 'true' && !cancelled()
       uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_CONFIG == 'true' && !cancelled()
       with:
         name: config.buildinfo
-        path: openwrt/bin/config
+        path: ./artifact/
 
 
     - name: 整理固件文件夹
