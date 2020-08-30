@@ -9,17 +9,17 @@
 #代码里有 name: 后面的内容随便改,冒号后面是有个空格的,如果修改固件名字就要考虑能不能显示出你想要的
 
 
-name: CeShi-OpenWrt 固件
+name: Lede-OpenWrt 固件
 
 on:
   repository_dispatch:
 
-#编辑任意指定文件触发开始编译(去掉下面5个#开启,最下面一行是指定修改什么文件就触发编译,我现在是修改CeShi.config文件触发)
+#编辑任意指定文件触发开始编译(去掉下面5个#开启,最下面一行是指定修改什么文件就触发编译,我现在是修改diy.config文件触发)
 #  push:
 #    branches:
 #      - master
 #    paths:
-#      - 'CeShi.config'
+#      - 'diy.config'
 
 
 #release发布触发开始编译(只是一个触发条件,不会发布的,又麻烦,没卵用,不用研究)
@@ -41,10 +41,10 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: CeShi.config
-  DIY_OP_SH: CeShi.sh
+  CONFIG_FILE: diy.config
+  DIY_OP_SH: diy-lede.sh
   SSH_ACTIONS: false
-  UPLOAD_BIN_DIR: true
+  UPLOAD_BIN_DIR: false
   UPLOAD_CONFIG: true
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: true
@@ -53,7 +53,7 @@ env:
 
 jobs:
   build:
-    name: 编译OpenWrt-CeShi固件
+    name: 编译OpenWrt-lede固件
     runs-on: ubuntu-18.04
     if: github.event.repository.owner.id == github.event.sender.id
 
