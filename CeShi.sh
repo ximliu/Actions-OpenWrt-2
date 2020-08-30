@@ -46,7 +46,8 @@ svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-passwa
 svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/xiaorouji/package  #passwall出国软件依赖
 git clone https://github.com/rufengsuixing/luci-app-adguardhome.git package/lean/luci-app-adguardhome  #adguardhome
 
-
+rm -rf ./package/lean/k3screenctrl && svn co https://github.com/project-openwrt/openwrt/trunk/package/zxlhhyccc/phicomm-k3screenctrl package/zxlhhyccc/phicomm-k3screenctrl  #passwall出国软件
+svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-k3screenctrl package/ctcgfw/luci-app-k3screenctrl  #passwall出国软件依赖
 
 rm -rf ./package/lean/luci-theme-argon && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon  #新的argon主题
 #全新的[argon-主题]此主题玩法很多,这里看说明【https://github.com/jerrykuku/luci-theme-argon/blob/18.06/README_ZH.md】
