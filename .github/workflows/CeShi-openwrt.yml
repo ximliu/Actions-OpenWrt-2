@@ -135,17 +135,16 @@ jobs:
         path: openwrt/bin
 
 
-    - name: 整理文件
+    - name: 提取.config配置文件
       run: |
-          rm -rf ./artifact/
-          mkdir -p ./artifact/
-          find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} ./artifact/
-    - name: 上传固件
+          mkdir config
+          find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} ./config/
+    - name: 上传.config配置文件在github空间
       if: env.UPLOAD_CONFIG == 'true' && !cancelled()
       uses: actions/upload-artifact@main
       with:
-        name: config.buildinfo
-        path: ./artifact/
+        name: ${{ env.DEVICE_NAME }}_config_${{ env.FILE_DATE }}
+        path: ./config/
 
 
     - name: 整理固件文件夹
@@ -154,6 +153,7 @@ jobs:
         cd openwrt/bin/targets/*/*
         rm -rf packages && mkdir packages
         find -name "*.buildinfo*" | xargs -i mv -f {} packages
+        find -name "*sha256sums*" | xargs -i mv -f {} packages
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
