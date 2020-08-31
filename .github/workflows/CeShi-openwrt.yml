@@ -41,8 +41,8 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: diy.config
-  DIY_OP_SH: diy-lede.sh
+  CONFIG_FILE: CeShi.config
+  DIY_OP_SH: CeShi.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_CONFIG: true
@@ -162,7 +162,7 @@ jobs:
       uses: actions/upload-artifact@main
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
       with:
-        name: OpenWrt_firmware_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
+        name: CeShi_firmware_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
     - name: 上传固件到cowtransfer网盘
