@@ -191,7 +191,7 @@ jobs:
         
     - name: 上传固件在github空间
       uses: actions/upload-artifact@main
-      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
       with:
         name: 19.07_firmware${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
