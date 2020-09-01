@@ -14,7 +14,7 @@ sed -i 's/192.168.1.1/192.168.2.2/g' ./package/base-files/files/bin/config_gener
 sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
 
 
-sed -i 's/TARGET_DEVICES += generic/TARGET_DEVICES += x86-64/g' ./target/linux/x86/image/64.mk
+sed -i 's/generic/x86-64/g' ./target/linux/x86/image/64.mk
 
 
 # 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
@@ -48,9 +48,6 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/lean/l
 svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-passwall package/xiaorouji/luci-app-passwall  #passwall出国软件
 svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/xiaorouji/package  #passwall出国软件依赖
 git clone https://github.com/rufengsuixing/luci-app-adguardhome.git package/lean/luci-app-adguardhome  #adguardhome
-
-rm -rf ./package/lean/k3screenctrl && svn co https://github.com/project-openwrt/openwrt/trunk/package/zxlhhyccc/phicomm-k3screenctrl package/zxlhhyccc/phicomm-k3screenctrl  #passwall出国软件
-svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-k3screenctrl package/ctcgfw/luci-app-k3screenctrl  #passwall出国软件依赖
 
 rm -rf ./package/lean/luci-theme-argon && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon  #新的argon主题
 #全新的[argon-主题]此主题玩法很多,这里看说明【https://github.com/jerrykuku/luci-theme-argon/blob/18.06/README_ZH.md】
