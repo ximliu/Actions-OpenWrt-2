@@ -200,11 +200,11 @@ jobs:
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "::warning file=↓WeTransfer网盘下载地址↓::$(cat wetransfer.log | )"
+        echo "::warning file=↓WeTransfer网盘下载地址↓ | grep https)"
         
     - name: 上传固件到cowtransfer网盘
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=↓cowtransfer网盘下载地址↓::$(cat cowtransfer.log | 1)"
+        echo "::warning file=↓cowtransfer网盘下载地址↓::123 | grep https)"
