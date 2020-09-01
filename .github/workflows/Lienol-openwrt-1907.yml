@@ -207,4 +207,4 @@ jobs:
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=↓cowtransfer网盘下载地址↓::$(cat cowtransfer.log | grep https)"
+        echo "::warning file=↓cowtransfer网盘下载地址↓::$(cat cowtransfer.log | 1)"
