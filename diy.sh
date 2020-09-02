@@ -19,7 +19,3 @@ sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' ./package/lean/default-settings/files/z
 
 # 修改内核版本
 #sed -i 's/KERNEL_PATCHVER:=4.19/KERNEL_PATCHVER:=4.9/g' ./target/linux/x86/Makefile
-
-
-# 删除已知的重复文件
-rm -rf ./package/lienol/luci-app-timecontrol
