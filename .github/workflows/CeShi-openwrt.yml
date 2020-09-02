@@ -43,8 +43,8 @@ env:
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: K2P.config
   DIY_OP_SH: diy.sh
-  SSH_ACTIONS: false
-  UPLOAD_BIN_DIR: true
+  SSH_ACTIONS: true
+  UPLOAD_BIN_DIR: false
   UPLOAD_CONFIG: true
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: true
