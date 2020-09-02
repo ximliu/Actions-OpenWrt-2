@@ -44,7 +44,7 @@ env:
   CONFIG_FILE: project-419.config
   DIY_OP_SH: project-419.sh
   SSH_ACTIONS: true
-  UPLOAD_BIN_DIR: false
+  UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
