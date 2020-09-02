@@ -8,11 +8,11 @@ name: Build Lean's OpenWrt for K2P
 on:
   release:
     types: [published]
-  push:
-    branches:
-      - master
-    paths:
-      - "K2P.config"
+#  push:
+#    branches:
+#      - master
+#    paths:
+#      - "K2P.config"
 #  schedule:
 #    - cron: 0 0 * * 1
 #  watch:
