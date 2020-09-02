@@ -42,7 +42,7 @@ env:
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: K2P.config
-  DIY_OP_SH: diy.sh
+  DIY_OP_SH: CeShi.sh
   SSH_ACTIONS: true
   UPLOAD_BIN_DIR: false
   UPLOAD_CONFIG: true
