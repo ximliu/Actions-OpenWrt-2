@@ -19,3 +19,11 @@ sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' ./package/lean/default-settings/files/z
 
 # 修改内核版本
 #sed -i 's/KERNEL_PATCHVER:=4.19/KERNEL_PATCHVER:=4.9/g' ./target/linux/x86/Makefile
+
+
+# 使用源码自带ShadowSocksR Plus+出国软件
+sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
+
+
+svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-passwall package/xiaorouji/luci-app-passwall  #passwall出国软件
+svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/xiaorouji/package  #passwall出国软件依赖
