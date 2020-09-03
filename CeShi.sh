@@ -4,7 +4,6 @@
 # 说明：
 # 除了第一行的#!/bin/bash不要动，其他的设置，前面带#表示不起作用，不带的表示起作用了（根据你自己需要打开或者关闭）
 #
-sed -i 's/IMAGE_SIZE := 15744k/IMAGE_SIZE := 32448k/g' ./target/linux/ramips/image/mt7621.mk
 
 # 修改openwrt登陆地址,把下面的192.168.2.2修改成你想要的就可以了
 sed -i 's/192.168.1.1/192.168.2.2/g' ./package/base-files/files/bin/config_generate
