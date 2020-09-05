@@ -30,4 +30,4 @@ rm -rf ./package/lienol/luci-app-timecontrol
 sed -i 's/BaiduPCS Web/百度网盘/g' ./package/ctcgfw/luci-app-baidupcs-web/luasrc/controller/baidupcs-web.lua
 sed -i 's/qBittorrent/BT下载/g' ./package/lean/luci-app-qbittorrent/po/zh-cn/qbittorrent.po
 sed -i 's/Turbo ACC 网络加速/网络加速/g' ./package/lean/luci-app-turboacc/po/zh-cn/turboacc.po
-sed -i 's/实时流量监测/流量/g' ./package/lean/luci-app-wrtbwmon/po/zh-cn/wrtbwmon.po
+sed -i 's/实时流量监测/实时流量/g' ./package/lean/luci-app-wrtbwmon/po/zh-cn/wrtbwmon.po
