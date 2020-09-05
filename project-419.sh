@@ -27,9 +27,7 @@ sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' ./package/lean/default-settings/files/z
 # 删除已知的重复文件
 rm -rf ./package/lienol/luci-app-timecontrol
 
-sed -i 's/BaiduPCS Web/百度网盘/g' ./package/lean/luci-app-baidupcs-web/luasrc/controller/baidupcs-web.lua
-sed -i 's/qBittorrent/BT下载/g' ./package/lean/luci-app-qbittorrent/luasrc/controller/qbittorrent.lua
-sed -i 's/网络存储/存储/g' ./package/lean/luci-app-amule/po/zh-cn/amule.po
+sed -i 's/BaiduPCS Web/百度网盘/g' ./package/ctcgfw/luci-app-baidupcs-web/luasrc/controller/baidupcs-web.lua
+sed -i 's/qBittorrent/BT下载/g' ./package/lean/luci-app-qbittorrent/po/zh-cn/qbittorrent.po
 sed -i 's/Turbo ACC 网络加速/网络加速/g' ./package/lean/luci-app-turboacc/po/zh-cn/turboacc.po
-sed -i 's/带宽监控/网监/g' ./feeds/luci/applications/luci-app-nlbwmon/po/zh-cn/nlbwmon.po
 sed -i 's/实时流量监测/流量/g' ./package/lean/luci-app-wrtbwmon/po/zh-cn/wrtbwmon.po
