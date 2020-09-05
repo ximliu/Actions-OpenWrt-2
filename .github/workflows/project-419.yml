@@ -98,6 +98,7 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        sed -i 's/带宽监控/网监/g' openwrt/feeds/luci/applications/luci-app-nlbwmon/po/zh-cn/nlbwmon.po
 
     - name: SSH远程连接服务器配置固件
       uses: P3TERX/debugger-action@main
