@@ -1,0 +1,9 @@
+--- package/base-files/files/bin/config_generate	2020-07-05 19:07:08.950988577 +0800
++++ package/base-files/files/bin/config_generate	2020-07-05 19:07:08.950988577 +0800
+@@ +113,7 +114,8 +115,9 @@
+set network.$1.proto='static'
+set network.$1.ipaddr='$ipad'
+set network.$1.netmask='$netm'
+set network.$1.gateway='192.168.2.1'
+set network.$1.broadcast='192.168.2.255'
+set network.$1.dns='192.168.2.3'
