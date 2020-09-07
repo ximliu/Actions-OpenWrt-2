@@ -1,6 +1,6 @@
 --- package/base-files/files/bin/config_generate
 +++ package/base-files/files/bin/config_generate
-@@ -110,6 +110,9 @@
+@@ -110,10 +110,7 @@
 				 set network.$1.proto='static'
 				 set network.$1.ipaddr='$ipad'
 				 set network.$1.netmask='$netm'
