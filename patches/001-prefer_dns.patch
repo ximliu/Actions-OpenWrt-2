@@ -1,6 +1,6 @@
 --- openwrt/package/base-files/files/bin/config_generate
 +++ openwrt/package/base-files/files/bin/config_generate
-@@ -109,7 +109,11 @@
+@@ -109,7 +109,12 @@
 			 uci -q batch <<-EOF
 				 set network.$1.proto='static'
 				 set network.$1.ipaddr='$ipad'
