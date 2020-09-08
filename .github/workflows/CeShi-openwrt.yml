@@ -42,9 +42,9 @@ env:
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: CeShi.config
-  DIY_P1_SH: CeShi.sh
-  DIY_P2_SH: CeShi2.sh
-  SSH_ACTIONS: false
+  DIY_P1_SH: x86-64/diy-lede.sh
+  DIY_P2_SH: x86-64/diy-lede2.sh
+  SSH_ACTIONS: true
   UPLOAD_BIN_DIR: false
   UPLOAD_CONFIG: true
   UPLOAD_FIRMWARE: false
