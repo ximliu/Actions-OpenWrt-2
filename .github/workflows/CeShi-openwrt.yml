@@ -36,23 +36,6 @@ on:
   watch:
 #    types: started
 
-
-env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: x86-64/diy.config
-  DIY_P1_SH: x86-64/diy-lede.sh
-  DIY_P2_SH: x86-64/diy-lede2.sh
-  SSH_ACTIONS: false
-  UPLOAD_BIN_DIR: false
-  UPLOAD_CONFIG: true
-  UPLOAD_FIRMWARE: true
-  UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: false
-  UPLOAD_RELEASE: false
-  TZ: Asia/Shanghai
-
 jobs:
   build:
     runs-on: ubuntu-18.04
@@ -67,6 +50,22 @@ jobs:
     steps:
     - name: 准备结束
       uses: actions/checkout@main
+
+    - name: Load Settings.ini
+      run: |
+        source "${GITHUB_WORKSPACE}/${{matrix.target}}/settings.ini"
+        echo "::set-env name=REPO_URL::${REPO_URL}"
+        echo "::set-env name=REPO_BRANCH::${REPO_BRANCH}"
+        echo "::set-env name=CONFIG_FILE::${CONFIG_FILE}"
+        echo "::set-env name=DIY_P1_SH::${DIY_P1_SH}"
+        echo "::set-env name=DIY_P2_SH::${DIY_P2_SH}"
+        echo "::set-env name=SSH_ACTIONS::${SSH_ACTIONS}"
+        echo "::set-env name=UPLOAD_BIN_DIR::${UPLOAD_BIN_DIR}"
+        echo "::set-env name=UPLOAD_CONFIG::${UPLOAD_CONFIG}"
+        echo "::set-env name=UPLOAD_FIRMWARE::${UPLOAD_FIRMWARE}"
+        echo "::set-env name=UPLOAD_COWTRANSFER::${UPLOAD_COWTRANSFER}"
+        echo "::set-env name=UPLOAD_WETRANSFER::${UPLOAD_WETRANSFER}"
+        echo "::set-env name=UPLOAD_RELEASE::${UPLOAD_RELEASE}"
 
     - name: 开始安装编译所需系统
       env:
