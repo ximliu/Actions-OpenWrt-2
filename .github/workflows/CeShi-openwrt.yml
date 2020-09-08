@@ -85,8 +85,8 @@ jobs:
 
     - name: 加载feeds跟自定义插件
       run: |
-        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
-        chmod +x $DIY_P1_SH
+        [ -e x86-64/$FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        chmod +x x86-64/$DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
@@ -98,9 +98,9 @@ jobs:
 
     - name: 加载diy.config设置
       run: |
-        [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        chmod +x $DIY_P2_SH
+        [ -e x86-64/files ] && mv files openwrt/files
+        [ -e x86-64/$CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        chmod +x x86-64/$DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
