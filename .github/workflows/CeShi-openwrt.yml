@@ -55,9 +55,14 @@ env:
 
 jobs:
   build:
-    name: 编译OpenWrt-lede固件
     runs-on: ubuntu-18.04
     if: github.event.repository.owner.id == github.event.sender.id
+
+    name: 编译 ${{matrix.target}} 固件
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [x86-64]
 
     steps:
     - name: 准备结束
@@ -98,7 +103,7 @@ jobs:
 
     - name: 加载diy.config设置
       run: |
-        [ -e x86-64/files ] && mv files openwrt/files
+        [ -e ${{matrix.target}}/files ] && mv ${{matrix.target}}/files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
