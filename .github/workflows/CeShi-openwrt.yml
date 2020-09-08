@@ -59,10 +59,10 @@ jobs:
         source "${GITHUB_WORKSPACE}/${{matrix.target}}/settings.ini"
         echo "::set-env name=REPO_URL::${REPO_URL}"
         echo "::set-env name=REPO_BRANCH::${REPO_BRANCH}"
-        echo "::set-env name=FEEDS_CONF::${{matrix.target}}/${FEEDS_CONF}"
-        echo "::set-env name=CONFIG_FILE::${{matrix.target}}/${CONFIG_FILE}"
-        echo "::set-env name=DIY_P1_SH::${{matrix.target}}/${DIY_P1_SH}"
-        echo "::set-env name=DIY_P2_SH::${{matrix.target}}/${DIY_P2_SH}"
+        echo "::set-env name=FEEDS_CONF::${FEEDS_CONF}"
+        echo "::set-env name=CONFIG_FILE::${CONFIG_FILE}"
+        echo "::set-env name=DIY_P1_SH::${DIY_P1_SH}"
+        echo "::set-env name=DIY_P2_SH::${DIY_P2_SH}"
         echo "::set-env name=SSH_ACTIONS::${SSH_ACTIONS}"
         echo "::set-env name=UPLOAD_BIN_DIR::${UPLOAD_BIN_DIR}"
         echo "::set-env name=UPLOAD_CONFIG::${UPLOAD_CONFIG}"
@@ -93,8 +93,8 @@ jobs:
 
     - name: 加载feeds跟自定义插件
       run: |
-        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
-        chmod +x $DIY_P1_SH
+        [ -e ${{matrix.target}}/$FEEDS_CONF ] && mv ${{matrix.target}}/$FEEDS_CONF openwrt/feeds.conf.default
+        chmod +x ${{matrix.target}}/$DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
@@ -107,8 +107,8 @@ jobs:
     - name: 加载diy.config设置
       run: |
         [ -e ${{matrix.target}}/files ] && mv ${{matrix.target}}/files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        chmod +x $DIY_P2_SH
+        [ -e ${{matrix.target}}/$CONFIG_FILE ] && mv ${{matrix.target}}/$CONFIG_FILE openwrt/.config
+        chmod +x ${{matrix.target}}/$DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
