@@ -54,7 +54,7 @@ jobs:
     - name: 准备结束
       uses: actions/checkout@main
 
-    - name: Load Settings.ini
+    - name: 把开关都转到${{matrix.target}}的“Settings.ini”
       run: |
         source "${GITHUB_WORKSPACE}/${{matrix.target}}/settings.ini"
         echo "::set-env name=REPO_URL::${REPO_URL}"
