@@ -38,6 +38,7 @@ on:
 
 env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  SCKEY: ${{ secrets.SCKEY }}
   TZ: Asia/Shanghai
 
 jobs:
@@ -233,3 +234,8 @@ jobs:
         pattern: "${{ env.FIRMWARE }}/*"
         github-token: ${{ secrets.REPO_TOKEN }}
         release-url: ${{ steps.create_release.outputs.upload_url }}
+
+    - name: WeChat notification
+      if: env.SCKEY
+      run: |
+        [ ${{ env.status }} == 'success' ] && curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=🎉OpenWrt_${{ env.date3 }}_${{ env.DEVICE_NAME }}编译完成😋|| curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=❌OpenWrt_${{ env.date3 }}_${{ env.DEVICE_NAME }}编译失败😂
