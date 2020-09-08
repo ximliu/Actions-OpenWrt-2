@@ -54,9 +54,7 @@ jobs:
 
     steps:
     - name: WeChat notification
-      if: env.SCKEY
-      run: |
-        [ ${{ env.status }} == 'success' ] && curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=🎉开始编译OpenWrt-${{matrix.target}}😋  
+      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{matrix.target}}开始编译
     
     - name: 准备结束
       uses: actions/checkout@main
