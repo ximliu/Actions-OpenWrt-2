@@ -56,6 +56,9 @@ jobs:
     - name: WeChat notification
       run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{matrix.target}}开始编译
 
+    - name: 准备结束
+      uses: actions/checkout@main   
+    
     - name: 把开关转到根目录【${{matrix.target}}】｛Settings.ini｝
       run: |
         source "${GITHUB_WORKSPACE}/${{matrix.target}}/settings.ini"
@@ -72,9 +75,6 @@ jobs:
         echo "::set-env name=UPLOAD_COWTRANSFER::${UPLOAD_COWTRANSFER}"
         echo "::set-env name=UPLOAD_WETRANSFER::${UPLOAD_WETRANSFER}"
         echo "::set-env name=UPLOAD_RELEASE::${UPLOAD_RELEASE}"
-
-    - name: 准备结束
-      uses: actions/checkout@main
     
     - name: 开始安装编译所需系统
       env:
