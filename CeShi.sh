@@ -56,3 +56,5 @@ sed -i 's/Turbo ACC 网络加速/网络加速/g' ./package/lean/luci-app-flowoff
 sed -i 's/Turbo ACC 网络加速/网络加速/g' ./package/lean/luci-app-sfe/po/zh-cn/sfe.po
 sed -i 's/带宽监控/监视/g' feeds/luci/applications/luci-app-nlbwmon/po/zh-cn/nlbwmon.po
 sed -i 's/实时流量监测/实时流量/g' ./package/lean/luci-app-wrtbwmon/po/zh-cn/wrtbwmon.po
+
+sed -i "s/OpenWrt /P3TERX build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/lean/default-settings/files/zzz-default-settings
