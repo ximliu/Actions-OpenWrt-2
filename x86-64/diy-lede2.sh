@@ -7,3 +7,11 @@ sed -i 's/带宽监控/监视/g' ./feeds/luci/applications/luci-app-nlbwmon/po/z
 sed -i 's/实时流量监测/实时流量/g' ./package/lean/luci-app-wrtbwmon/po/zh-cn/wrtbwmon.po
 
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+sed -i "s/OpenWrt /P3TERX build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/lean/default-settings/files/zzz-default-settings
+sed -i '/openwrt_luci/ { s/sed/#sed/g; }' package/lean/default-settings/files/zzz-default-settings
+sed -i 's|openwrt.proxy.ustclug.org|256pd.top:9666/稳定版/x64|g' package/lean/default-settings/files/zzz-default-settings
+sed -i '/downloads/ { s/s\//s|/g; }' package/lean/default-settings/files/zzz-default-settings
+sed -i '/downloads/ { s/org\//org|/g; }' package/lean/default-settings/files/zzz-default-settings
+sed -i '/downloads/ { s/x64\//x64|/g; }' package/lean/default-settings/files/zzz-default-settings
+sed -i 's/http:/snapshots/' package/lean/default-settings/files/zzz-default-settings
+sed -i 's/https:/bin/g' package/lean/default-settings/files/zzz-default-settings
