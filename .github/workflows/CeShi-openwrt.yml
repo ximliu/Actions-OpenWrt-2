@@ -83,7 +83,7 @@ jobs:
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
-        sudo chown $USER:$GROUPS /workdir
+        sudo chown $USER:$GROUPS/${{matrix.target}} /workdir
 
     - name: 下载固件源码
       working-directory: /workdir
