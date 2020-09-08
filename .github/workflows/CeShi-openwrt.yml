@@ -88,7 +88,11 @@ jobs:
       run: |
         df -hT $PWD
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        if [ -f "${{matrix.target}}/feeds.conf" ]; then
+        (
+          mv ${{matrix.target}}/feeds.conf openwrt/
+        )
+        fi
 
     - name: 加载feeds跟自定义插件
       run: |
