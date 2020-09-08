@@ -56,7 +56,7 @@ jobs:
     - name: WeChat notification
       if: env.SCKEY
       run: |
-        [ ${{ env.status }} == 'success' ] && curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=🎉OpenWrt_${{ env.RELEASE_TAG }}_${{ env.DEVICE_NAME }}编译完成，发布成功😋|| curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=❌OpenWrt_${{ env.RELEASE_TAG }}_${{ env.DEVICE_NAME }}编译失败😂  
+        [ ${{ env.status }} == 'success' ] && curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=🎉开始编译OpenWrt-${{matrix.target}}😋  
     
     - name: 准备结束
       uses: actions/checkout@main
@@ -225,4 +225,4 @@ jobs:
     - name: WeChat notification
       if: env.SCKEY
       run: |
-        [ ${{ env.status }} == 'success' ] && curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=🎉OpenWrt_${{ env.RELEASE_TAG }}_${{ env.DEVICE_NAME }}编译完成，发布成功😋|| curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=❌OpenWrt_${{ env.RELEASE_TAG }}_${{ env.DEVICE_NAME }}编译失败😂
+        [ ${{ env.status }} == 'success' ] && curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=🎉OpenWrt_${{ env.RELEASE_TAG }}_${{matrix.target}}编译完成，发布成功😋|| curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=❌OpenWrt_${{ env.RELEASE_TAG }}_${{matrix.target}}编译失败😂
