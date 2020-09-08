@@ -96,7 +96,7 @@ jobs:
 
     - name: 加载feeds跟自定义插件
       run: |
-        chmod +x ${{matrix.target}}/$DIY_P1_SH
+        chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
@@ -109,7 +109,7 @@ jobs:
     - name: 加载diy.config设置
       run: |
         [ -e ${{matrix.target}}/files ] && mv ${{matrix.target}}/files openwrt/files
-        chmod +x ${{matrix.target}}/$DIY_P2_SH
+        chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
