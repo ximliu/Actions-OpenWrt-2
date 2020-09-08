@@ -203,7 +203,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=RELEASE_TAG::$(date +"%Y-%m-%d %H.%M")"
+        echo "::set-env name=RELEASE_TAG::$(date +"%Y.%m.%d-%H")"
         echo "🚀 ${{matrix.target}}固件下载" >> release.txt
         echo "🚀 奶牛快传和WeTransfer转存只保存7天" >> release.txt
         echo "🔗 [奶牛快传链接](${{ env.COWTRANSFER_URL }})" >> release.txt
