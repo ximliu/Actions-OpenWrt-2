@@ -59,6 +59,7 @@ jobs:
         source "${GITHUB_WORKSPACE}/${{matrix.target}}/settings.ini"
         echo "::set-env name=REPO_URL::${REPO_URL}"
         echo "::set-env name=REPO_BRANCH::${REPO_BRANCH}"
+        echo "::set-env name=FEEDS_CONF::${FEEDS_CONF}"
         echo "::set-env name=CONFIG_FILE::${CONFIG_FILE}"
         echo "::set-env name=DIY_P1_SH::${DIY_P1_SH}"
         echo "::set-env name=DIY_P2_SH::${DIY_P2_SH}"
@@ -88,14 +89,11 @@ jobs:
       run: |
         df -hT $PWD
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-        if [ -f "${{matrix.target}}/feeds.conf" ]; then
-        (
-          mv ${{matrix.target}}/feeds.conf openwrt/
-        )
-        fi
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: 加载feeds跟自定义插件
       run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
