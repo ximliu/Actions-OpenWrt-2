@@ -54,7 +54,7 @@ jobs:
 
     steps:
     - name: WeChat notification
-      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{matrix.target}}开始编译
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{matrix.target}}开始编译
 
     - name: 准备结束
       uses: actions/checkout@main   
@@ -199,26 +199,36 @@ jobs:
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
         echo "::set-env name=WETRANSFER_URL::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
     
-    - name: Generate tag
-      id: tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      run: |
-        echo "::set-env name=RELEASE_TAG::$(date +"%Y.%m.%d-%H")"
-        echo "🚀 ${{matrix.target}}固件下载" >> release.txt
-        echo "🚀 奶牛快传和WeTransfer转存只保存7天" >> release.txt
-        echo "🔗 [奶牛快传链接](${{ env.COWTRANSFER_URL }})" >> release.txt
-        echo "🔗 [WeTransfer链接](${{ env.WETRANSFER_URL }})" >> release.txt
-        echo "::set-output name=status::success"
-    
-    - name: Upload firmware to release
-      uses: softprops/action-gh-release@v1
-      if: steps.tag.outputs.status == 'success' && !cancelled()
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@main
+      continue-on-error: true
+      if: env.REPO_TOKEN && env.UPLOAD_RELEASE == 'true'
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
-        tag_name: ${{ env.RELEASE_TAG }}
-        body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
+        tag_name: ${{matrix.target}}
+        release_name: ${{matrix.target}}
+        body: |
+            墙内加速下载🔥:
+            
+            奶牛快传: ${{ env.COWTRANSFER_URL }}
+            
+            WeTransfer: ${{ env.WETRANSFER_URL }}
+            
+            快传保存7天
+            
+        draft: false
+        prerelease: false
+
+    - name: Upload firmware for release
+      uses: csexton/release-asset-action@master
+      continue-on-error: true
+      if: env.REPO_TOKEN && env.UPLOAD_RELEASE == 'true'
+      with:
+        pattern: "${{ env.FIRMWARE }}/*"
+        github-token: ${{ secrets.REPO_TOKEN }}
+        release-url: ${{ steps.create_release.outputs.upload_url }}
 
     - name: WeChat notification
       if: env.SCKEY
