@@ -53,7 +53,7 @@ jobs:
         target: [x86-64]
 
     steps:
-    - name: WeChat notification
+    - name: 开始编译,微信通知
       run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{matrix.target}}开始编译
 
     - name: 准备结束
