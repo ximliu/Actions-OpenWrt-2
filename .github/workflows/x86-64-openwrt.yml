@@ -140,6 +140,7 @@ jobs:
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "::set-env name=DEVICE_NAME::$(cat DEVICE_NAME)"
         echo "::set-env name=FILE_DATE::$(date "+%Y-%m-%d %H.%M.%S")"
+        echo "::set-env name=FILE_DATE2::$(date "+%Y年%m月%d日 %H点%M分")"
 
     - name: 检查github储存空间情况
       if: (!cancelled())
@@ -214,7 +215,7 @@ jobs:
         
         echo "🔗 WeTransfer（国外高速下载）： [点击下载](${{ env.WETRANSFER_URL }})" >> release.txt
         
-        echo "🔥 链接上传于$${{ env.FILE_DATE }}链接有效期为7天，无需注册直接下载🔥" >> release.txt
+        echo "🔥 链接发布于$${{ env.FILE_DATE2 }}，链接有效期为7天，无需注册直接下载🔥" >> release.txt
         echo "::set-output name=status::success"
     
     - name: 发布固件
