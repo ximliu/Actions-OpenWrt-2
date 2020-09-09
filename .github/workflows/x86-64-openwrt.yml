@@ -34,6 +34,7 @@ on:
 env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   SCKEY: ${{ secrets.SCKEY }}
+  FILE_NAME: LEDE的x86的64位固件
   TZ: Asia/Shanghai
 
 jobs:
@@ -50,7 +51,11 @@ jobs:
     steps:
     - name: 准备结束
       uses: actions/checkout@main   
-    
+
+    - name: 开始编译,微信通知
+      if: env.SCKEY
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.FILE_NAME }}
+
     - name: 把开关转到根目录【${{matrix.target}}】｛Settings.ini｝
       run: |
         source "${GITHUB_WORKSPACE}/${{matrix.target}}/settings.ini"
@@ -219,5 +224,5 @@ jobs:
         files: ${{ env.FIRMWARE }}/*
 
     - name: 编译结束,微信通知
-      if: steps.organizer.outputs.status == 'success' && !cancelled()
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.date }}${{matrix.target}}编译结束
+      if: env.SCKEY
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.FILE_NAME }}编译结束
