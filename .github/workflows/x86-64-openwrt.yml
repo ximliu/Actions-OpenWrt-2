@@ -192,7 +192,7 @@ jobs:
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log ↓↓奶牛快传下载地址↓↓ | grep https)"
+        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
         echo "::set-env name=COWTRANSFER_URL::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
     
     - name: 上传固件到WeTransfer（国外高速下载）
@@ -200,25 +200,22 @@ jobs:
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "::warning file=wetransfer.com::$(cat wetransfer.log ↓↓wetransfer下载地址↓↓ | grep https)"
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
         echo "::set-env name=WETRANSFER_URL::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
     
-    - name: 发布奶牛快传和WeTransfer链接
+    - name: 发布奶牛快传链接（国内下载）
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=RELEASE_TAG::$(date +"%Y年%m月%d日")"
-        echo "" >> release.txt
+        echo "::set-env name=RELEASE_TAG::$(date +"%Y.%m.%d")"
         echo "💋 ${{matrix.target}}固件下载 🎉:" >> release.txt
         echo "" >> release.txt
-        echo "🤞奶牛快传（国内高速下载）✨： [点击下载](${{ env.COWTRANSFER_URL }})" >> release.txt
+        echo "🤞奶牛快传（国内高速下载）✨： ${{ env.COWTRANSFER_URL }}" >> release.txt
         echo "" >> release.txt
-        echo "🎁WeTransfer（国外高速下载）🎈： [点击下载](${{ env.WETRANSFER_URL }})" >> release.txt
-        echo "" >> release.txt
-        echo "🎄链接发布于${{ env.date }}，链接有效期为7天，无需注册直接下载🎨" >> release.txt
+        echo "🎄奶牛快传发布于${{ env.date }}，链接有效期为7天，无需注册直接下载🎨" >> release.txt
         echo "::set-output name=status::success"
     
-    - name: 发布固件
+    - name: 发布固件（国外下载）
       uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
