@@ -206,11 +206,13 @@ jobs:
         echo "::set-env name=RELEASE_TAG::$(date +"%Y年%m月%d日")"
         echo "::set-env name=date::$(date +'%Y年%m月%d日 %k点%M分')"
         echo "::set-env name=date2::$(date +'%S')"
-        echo "🍓 ${{matrix.target}}固件下载 🍕:" >> release.txt
+        echo "💐 ${{matrix.target}}固件下载 🍕:" >> release.txt
         echo " "🛸" "🗽" "⛅" "🌈" "🔥" "⛄" "🐶" "🏅" "🦄" "🐤"" >> release.txt
-        echo "🍉奶牛快传(国内高速下载)💐： ${{ env.COWTRANSFER_URL }}" >> release.txt
+        echo "💐 奶牛快传(国内高速下载)💐： ${{ env.COWTRANSFER_URL }}" >> release.txt
         echo "" >> release.txt
-        echo "🌴奶牛快传发布于${{ env.date }}，链接有效期为7天，无需注册直接下载🚀" >> release.txt
+        echo "💐 WeTransfer(国外高速下载)💐： ${{ env.WETRANSFER_URL }}" >> release.txt
+        echo "" >> release.txt
+        echo "💐 奶牛快传发布于${{ env.date }}，链接有效期为7天，无需注册直接下载🚀" >> release.txt
         echo "::set-output name=status::success"
     
     - name: 发布固件（国外下载）
