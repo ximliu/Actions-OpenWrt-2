@@ -188,7 +188,7 @@ jobs:
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)无需注册直接下载"
+        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
         echo "::set-env name=COWTRANSFER_URL::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
     
     - name: 上传固件到WeTransfer（国外高速下载）
@@ -199,20 +199,19 @@ jobs:
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
         echo "::set-env name=WETRANSFER_URL::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
     
-    - name: 发布奶牛快传链接（国内下载）
+    - name: 发布奶牛快传和WeTransfer链接（国内下载）
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=RELEASE_TAG::$(date +"%Y年%m月%d日")"
-        echo "::set-env name=date::$(date +'%Y年%m月%d日 %k点%M分')"
-        echo "::set-env name=date2::$(date +'%S')"
-        echo "💐 ${{matrix.target}}固件下载 🍕:" >> release.txt
-        echo " "🛸" "🗽" "⛅" "🌈" "🔥" "⛄" "🐶" "🏅" "🦄" "🐤"" >> release.txt
-        echo "💐 奶牛快传(国内高速下载)💐： ${{ env.COWTRANSFER_URL }}" >> release.txt
+        echo "::set-env name=date1::$(date +'%Y年%m月%d日')"
+        echo "::set-env name=date2::$(date +'%k点%M分%S秒')"
+        echo "🏅 ${{matrix.target}}固件下载 ✨:" >> release.txt
         echo "" >> release.txt
-        echo "💐 WeTransfer(国外高速下载)💐： ${{ env.WETRANSFER_URL }}" >> release.txt
+        echo "💐 奶牛快传(国内高速下载)： ${{ env.COWTRANSFER_URL }} 🚀" >> release.txt
         echo "" >> release.txt
-        echo "💐 奶牛快传发布于${{ env.date }}，链接有效期为7天，无需注册直接下载🚀" >> release.txt
+        echo "🎄 WeTransfer(国外高速下载)： ${{ env.WETRANSFER_URL }} 🚀" >> release.txt
+        echo "" >> release.txt
+        echo "🌴 链接发布于${{ env.date1 }}${{ env.date2 }}，链接有效期为7天，无需注册直接下载 🐤" >> release.txt
         echo "::set-output name=status::success"
     
     - name: 发布固件（国外下载）
@@ -221,7 +220,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
-        tag_name: ${{ env.RELEASE_TAG }}-${{ env.DEVICE_NAME }}${{ env.date2 }}
+        tag_name: ${{ env.date1 }}${{ env.date2 }}-${{ env.DEVICE_NAME }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
 
