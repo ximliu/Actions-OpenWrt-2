@@ -206,7 +206,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=RELEASE_TAG::$(date +"%Y.%m.%d--%H")"
+        echo "::set-env name=RELEASE_TAG::$(date +"%Y.%m.%d-%H")"
         echo "::set-env name=date::$(date +'%Y年%m月%d日 %H点%M分')"
         echo "🍓 ${{matrix.target}}固件下载 🍕:" >> release.txt
         echo " "🛸" "🗽" "⛅" "🌈" "🔥" "⛄" "🐶" "🏅" "🦄" "🐤"" >> release.txt
