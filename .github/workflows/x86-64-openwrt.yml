@@ -206,8 +206,9 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=RELEASE_TAG::$(date +"%Y.%m.%d-%H")"
-        echo "::set-env name=date::$(date +'%Y年%m月%d日 %H点%M分')"
+        echo "::set-env name=RELEASE_TAG::$(date +"%Y年%m月%d日")"
+        echo "::set-env name=date::$(date +'%Y年%m月%d日 %k点%M分')"
+        echo "::set-env name=date2::$(date +'%S')"
         echo "🍓 ${{matrix.target}}固件下载 🍕:" >> release.txt
         echo " "🛸" "🗽" "⛅" "🌈" "🔥" "⛄" "🐶" "🏅" "🦄" "🐤"" >> release.txt
         echo "🍉奶牛快传(国内高速下载)💐： ${{ env.COWTRANSFER_URL }}" >> release.txt
@@ -221,7 +222,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
-        tag_name: ${{matrix.target}}发布于${{ env.RELEASE_TAG }}
+        tag_name: ${{ env.RELEASE_TAG }}-${{ env.DEVICE_NAME }}${{ env.date2 }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
 
