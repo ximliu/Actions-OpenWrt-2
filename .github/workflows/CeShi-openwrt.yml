@@ -172,6 +172,9 @@ jobs:
         rm -rf packages && mkdir packages
         find -name "*.buildinfo*" | xargs -i mv -f {} packages
         find -name "*sha256sums*" | xargs -i mv -f {} packages
+        find -name "*kernel.bin*" | xargs -i mv -f {} packages
+        find -name "*rootfs.img*" | xargs -i mv -f {} packages
+        find -name "*.manifest*" | xargs -i mv -f {} packages
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
@@ -183,54 +186,46 @@ jobs:
         name: CeShi_firmware_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
-    - name: Upload firmware to cowtransfer
+    - name: 上传固件到奶牛快传（国内高速下载）
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+        echo "::warning file=↓↓奶牛快传下载地址↓↓::$(cat cowtransfer.log | grep https)"
         echo "::set-env name=COWTRANSFER_URL::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
     
-    - name: Upload firmware to WeTransfer
+    - name: 上传固件到WeTransfer（国外高速下载）
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+        echo "::warning file=↓↓wetransfer下载地址↓↓::$(cat wetransfer.log | grep https)"
         echo "::set-env name=WETRANSFER_URL::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
     
-    - name: Create release
-      id: create_release
-      uses: actions/create-release@main
-      continue-on-error: true
-      if: env.REPO_TOKEN && env.UPLOAD_RELEASE == 'true'
+    - name: 发布网盘链接
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        echo "::set-env name=RELEASE_TAG::$(date +"%Y.%m.%d")"
+        echo "${{matrix.target}}固件下载🔥:" >> release.txt
+        
+        echo "🔗 [奶牛快传（国内高速下载）🔥](${{ env.COWTRANSFER_URL }})" >> release.txt
+        
+        echo "🔗 [WeTransfer（国外高速下载）🔥](${{ env.WETRANSFER_URL }})" >> release.txt
+        
+        echo "🔥奶牛快传和WeTransfer转存只保存7天，无需注册直接下载🔥" >> release.txt
+        echo "::set-output name=status::success"
+    
+    - name: 发布固件
+      uses: softprops/action-gh-release@v1
+      if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
-        tag_name: ${{matrix.target}}
-        release_name: ${{matrix.target}}
-        body: |
-            墙内加速下载🔥:
-            
-            奶牛快传: ${{ env.COWTRANSFER_URL }}
-            
-            WeTransfer: ${{ env.WETRANSFER_URL }}
-            
-            快传保存7天
-            
-        draft: false
-        prerelease: false
+        tag_name: ${{ env.RELEASE_TAG }}
+        body_path: release.txt
+        files: ${{ env.FIRMWARE }}/*
 
-    - name: Upload firmware for release
-      uses: csexton/release-asset-action@master
-      continue-on-error: true
-      if: env.REPO_TOKEN && env.UPLOAD_RELEASE == 'true'
-      with:
-        pattern: "${{ env.FIRMWARE }}/*"
-        github-token: ${{ secrets.REPO_TOKEN }}
-        release-url: ${{ steps.create_release.outputs.upload_url }}
-
-    - name: WeChat notification
-      if: env.SCKEY
-      run: |
-        [ ${{ env.status }} == 'success' ] && curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=🎉OpenWrt_${{ env.RELEASE_TAG }}_${{matrix.target}}编译完成，发布成功😋|| curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=❌OpenWrt_${{ env.RELEASE_TAG }}_${{matrix.target}}编译失败😂
+    - name: 编译结束,微信通知
+      if: steps.organizer.outputs.status == 'success' && !cancelled()
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.FILE_NAME }}${{matrix.target}}编译结束
