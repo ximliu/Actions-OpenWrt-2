@@ -54,7 +54,7 @@ jobs:
 
     steps:
     - name: 开始编译,微信通知
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{matrix.target}}开始编译
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.date }}${{matrix.target}}开始编译
 
     - name: 准备结束
       uses: actions/checkout@main   
@@ -140,7 +140,6 @@ jobs:
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "::set-env name=DEVICE_NAME::$(cat DEVICE_NAME)"
         echo "::set-env name=FILE_DATE::$(date "+%Y-%m-%d %H.%M.%S")"
-        echo "::set-env name=date::$(date +'%Y年%m月%d日 %H点%M分')"
 
     - name: 检查github储存空间情况
       if: (!cancelled())
@@ -208,6 +207,7 @@ jobs:
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
         echo "::set-env name=RELEASE_TAG::$(date +"%Y.%m.%d")"
+        echo "::set-env name=date::$(date +'%Y年%m月%d日 %H点%M分')"
         echo "💋 ${{matrix.target}}固件下载 🎉:" >> release.txt
         echo "" >> release.txt
         echo "🤞奶牛快传（国内高速下载）✨： ${{ env.COWTRANSFER_URL }}" >> release.txt
@@ -227,4 +227,4 @@ jobs:
 
     - name: 编译结束,微信通知
       if: steps.organizer.outputs.status == 'success' && !cancelled()
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{matrix.target}}编译结束
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.date }}${{matrix.target}}编译结束
