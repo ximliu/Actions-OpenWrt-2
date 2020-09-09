@@ -192,7 +192,7 @@ jobs:
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=↓↓奶牛快传下载地址↓↓::$(cat cowtransfer.log | grep https)"
+        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log ↓↓奶牛快传下载地址↓↓ | grep https)"
         echo "::set-env name=COWTRANSFER_URL::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
     
     - name: 上传固件到WeTransfer（国外高速下载）
@@ -200,7 +200,7 @@ jobs:
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "::warning file=↓↓wetransfer下载地址↓↓::$(cat wetransfer.log | grep https)"
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log ↓↓wetransfer下载地址↓↓ | grep https)"
         echo "::set-env name=WETRANSFER_URL::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
     
     - name: 发布奶牛快传和WeTransfer链接
