@@ -220,7 +220,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
-        tag_name: ${{ env.date1 }}${{ env.date2 }}-${{ env.DEVICE_NAME }}
+        tag_name: ${{ env.date1 }}-${{ env.DEVICE_NAME }}-${{ env.date2 }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
 
