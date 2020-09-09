@@ -202,7 +202,7 @@ jobs:
         echo "::warning file=↓↓wetransfer下载地址↓↓::$(cat wetransfer.log | grep https)"
         echo "::set-env name=WETRANSFER_URL::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
     
-    - name: 发布网盘链接
+    - name: 发布奶牛快传和WeTransfer链接
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
@@ -228,4 +228,4 @@ jobs:
 
     - name: 编译结束,微信通知
       if: steps.organizer.outputs.status == 'success' && !cancelled()
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.FILE_NAME }}${{matrix.target}}编译结束
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{matrix.target}}编译结束
