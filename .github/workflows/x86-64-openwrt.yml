@@ -54,7 +54,7 @@ jobs:
 
     steps:
     - name: 开始编译,微信通知
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.date }}${{matrix.target}}开始编译
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{matrix.target}}开始编译
 
     - name: 准备结束
       uses: actions/checkout@main   
