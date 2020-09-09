@@ -208,13 +208,13 @@ jobs:
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
         echo "::set-env name=RELEASE_TAG::$(date +"%Y.%m.%d")"
-        .
+        
         echo "${{matrix.target}}固件下载🔥:" >> release.txt
-        .
+        
         echo "🔗 奶牛快传（国内高速下载）： [点击下载](${{ env.COWTRANSFER_URL }})" >> release.txt
         "🎉" "🤞" "✨" "🎁" "🎈" "🎄" "🎨" "💋" "🍓" "🍕" "🍉" "💐" "🌴" "🚀" "🛸" "🗽" "⛅" "🌈" "🔥" "⛄" "🐶" "🏅" "🦄" "🐤"
         echo "🔗 WeTransfer（国外高速下载）： [点击下载](${{ env.WETRANSFER_URL }})" >> release.txt
-        .
+        
         echo "🔥 链接发布于$${{ env.FILE_DATE2 }}，链接有效期为7天，无需注册直接下载" >> release.txt
         echo "::set-output name=status::success"
     
