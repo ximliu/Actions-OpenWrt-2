@@ -105,14 +105,22 @@ jobs:
         cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-
-    - name: 加载diy.config设置
+    
+    - name: Load custom configuration
       run: |
-        [ -e ${{matrix.target}}/files ] && mv ${{matrix.target}}/files openwrt/files
-        [ -e ${{matrix.target}}/$CONFIG_FILE ] && mv ${{matrix.target}}/$CONFIG_FILE openwrt/.config
-        chmod +x ${{matrix.target}}/$DIY_P2_SH
+        cp -Rf * openwrt/ || true
         cd openwrt
-        $GITHUB_WORKSPACE/${{matrix.target}}/$DIY_P2_SH
+        echo "Apply files..."
+        if [ -n "$(ls -A "${{matrix.target}}/files" 2>/dev/null)" ]; then
+         cp -rf ${{matrix.target}}/files/* files/
+        fi      
+        if [ -f "${{matrix.target}}/$DIY_P2_SH" ]; then
+        (
+          chmod +x ${{matrix.target}}/$DIY_P2_SH
+          /bin/bash "${{matrix.target}}/$DIY_P2_SH"
+        )
+        fi
+         mv ${{matrix.target}}/$CONFIG_FILE .config
 
     - name: SSH远程连接服务器配置固件
       uses: P3TERX/debugger-action@main
