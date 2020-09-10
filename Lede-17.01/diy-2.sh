@@ -22,6 +22,6 @@ sed -i 's/"KMS 服务器"/"KMS激活"/g' package/lean/luci-app-vlmcsd/po/zh-cn/v
 sed -i 's/"TTYD 终端"/"终端命令"/g' package/lean/luci-app-ttyd/po/zh-cn/terminal.po
 sed -i 's/"USB 打印服务器"/"打印服务"/g' package/lean/luci-app-usb-printer/po/zh-cn/usb-printer.po
 sed -i 's/"网络存储"/"存储"/g' package/lean/luci-app-usb-printer/po/zh-cn/usb-printer.po
-sed -i 's/"Web 管理"/"页面管理"/g' package/lean/luci-app-webadmin/po/zh-cn/webadmin.po
-sed -i 's/"管理权"/"修改密码"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
-sed -i 's/"系统"/"路由设置"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
+
+sed -i 's/"软件包"/"软件列表"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
+sed -i 's/"启动项"/"启用/禁用"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
