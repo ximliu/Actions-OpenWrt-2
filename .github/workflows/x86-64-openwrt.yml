@@ -203,8 +203,8 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=date1::$(date +'%Y年%m月%d号%k点')"
-        echo "::set-env name=date2::$(date +'%S秒')"
+        echo "::set-env name=date1::$(date "+%Y-%m-%d-%H:%M:%S")"
+        echo "::set-env name=date2::$(date +'%S')"
         echo "🏅 ${{matrix.target}}固件下载 ✨:" >> release.txt
         echo "" >> release.txt
         echo "💐 奶牛快传(国内高速下载)： ${{ env.COWTRANSFER_URL }} 🚀" >> release.txt
@@ -214,15 +214,17 @@ jobs:
         echo "🌴 链接发布于${{ env.date1 }}${{ env.date2 }}，链接有效期为7天，无需注册直接下载 🐤" >> release.txt
         echo "::set-output name=status::success"
     
-    - name: 发布固件
-      uses: softprops/action-gh-release@v1
-      if: steps.tag.outputs.status == 'success' && !cancelled()
-      env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+    - name: Create release
+      uses: ncipollo/release-action@v1
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        tag_name: ${{ env.date1 }}-${{ env.DEVICE_NAME }}-${{ env.date2 }}
-        body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
+        name: ${{ env.date1 }} 🚀 ${{matrix.target}} | 自动编译
+        allowUpdates: true
+        tag: ${{matrix.target}}
+        commit: master
+        token: ${{ secrets.REPO_TOKEN }}
+        body: release.txt
+        artifacts: ${{ env.FIRMWARE }}/*
 
     - name: 编译结束,微信通知
       if: env.SCKEY
