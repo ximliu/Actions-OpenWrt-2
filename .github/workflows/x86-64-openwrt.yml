@@ -209,22 +209,21 @@ jobs:
         echo "" >> release.txt
         echo "💐 奶牛快传(国内高速下载)： ${{ env.COWTRANSFER_URL }} 🚀" >> release.txt
         echo "" >> release.txt
-        echo "🎄 WeTransfer(国外高速下载)： ${{ env.WETRANSFER_URL }} 🚀" >> release.txt
+        echo "🗽 WeTransfer(国外高速下载)： ${{ env.WETRANSFER_URL }} 🚀" >> release.txt
         echo "" >> release.txt
         echo "🌴 链接发布于${{ env.date1 }}${{ env.date2 }}，链接有效期为7天，无需注册直接下载 🐤" >> release.txt
         echo "::set-output name=status::success"
     
-    - name: Create release
-      uses: ncipollo/release-action@v1
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+    - name: Upload firmware to release
+      uses: softprops/action-gh-release@v1
+      if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
-        name: ${{ env.date1 }} 🚀 ${{matrix.target}} | 自动编译
-        allowUpdates: true
+        name: ${{ env.date1 }}-${{matrix.target}}
         tag: ${{matrix.target}}
-        commit: master
-        token: ${{ secrets.REPO_TOKEN }}
-        body: release.txt
-        artifacts: ${{ env.FIRMWARE }}/*
+        body_path: release.txt
+        files: ${{ env.FIRMWARE }}/*
 
     - name: 编译结束,微信通知
       if: env.SCKEY
