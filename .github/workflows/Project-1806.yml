@@ -34,7 +34,7 @@ on:
 env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   SCKEY: ${{ secrets.SCKEY }}
-  WXTZ_NAME: Project的18.06固件
+  SERVERCHAN: Project的18.06固件
   TZ: Asia/Shanghai
 
 jobs:
@@ -53,8 +53,8 @@ jobs:
       uses: actions/checkout@main   
 
     - name: 开始编译,微信通知
-      if: env.WXTZ_SCKEY == 'true' && !cancelled()
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.WXTZ_NAME }}
+      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.SERVERCHAN }}
 
     - name: 把开关转到根目录【${{matrix.target}}】｛Settings.ini｝
       run: |
@@ -72,7 +72,7 @@ jobs:
         echo "::set-env name=UPLOAD_COWTRANSFER::${UPLOAD_COWTRANSFER}"
         echo "::set-env name=UPLOAD_WETRANSFER::${UPLOAD_WETRANSFER}"
         echo "::set-env name=UPLOAD_RELEASE::${UPLOAD_RELEASE}"
-        echo "::set-env name=WXTZ_SCKEY::${WXTZ_SCKEY}"
+        echo "::set-env name=SERVERCHAN_SCKEY::${SERVERCHAN_SCKEY}"
     
     - name: 开始安装编译所需系统
       env:
@@ -226,5 +226,5 @@ jobs:
         files: ${{ env.FIRMWARE }}/*
 
     - name: 编译结束,微信通知
-      if: env.WXTZ_SCKEY == 'true' && !cancelled()
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.WXTZ_NAME }}编译结束(${{ env.date2 }})
+      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.SERVERCHANE }}编译结束(${{ env.date2 }})
