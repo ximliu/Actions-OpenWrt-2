@@ -34,7 +34,7 @@ on:
 env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   SCKEY: ${{ secrets.SCKEY }}
-  WXTZ_NAME: LEDE的x86的64位固件
+  WXTZ_NAME: Project的18.06固件
   TZ: Asia/Shanghai
 
 jobs:
