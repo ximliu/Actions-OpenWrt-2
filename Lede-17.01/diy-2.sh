@@ -1,5 +1,5 @@
-# 修改banne文件（banne在根目录Lede-masetr文件夹里面）
-rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./Lede-masetr/banner openwrt/package/base-files/files/etc/ && cd openwrt
+# 修改banne文件（banne在根目录Lede-17.01文件夹里面）
+rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./Lede-17.01/banner openwrt/package/base-files/files/etc/ && cd openwrt
 
 #sed -i 's/KERNEL_PATCHVER:=5.4/KERNEL_PATCHVER:=4.19/g' ./target/linux/x86/Makefile  #修改内核版本
 #sed -i 's/KERNEL_TESTING_PATCHVER:=5.4/KERNEL_TESTING_PATCHVER:=4.19/g' ./target/linux/x86/Makefile  #修改内核版本
