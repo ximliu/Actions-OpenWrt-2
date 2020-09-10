@@ -203,15 +203,15 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=date1::$(date "+%Y年%m月%号-%H点%M分%秒")"
-        echo "::set-env name=date2::$(date "+%Y年%m月%号%H点%M分%秒")"
-        echo "🏅 ${{matrix.target}}固件下载 ✨:" >> release.txt
+        echo "::set-env name=date1::$(date "+%Y年%m月%号-%H点%M分%S秒")"
+        echo "::set-env name=date1::$(date "+%k点%M分-零%S秒")"
+        echo "🏅 ${{ env.DEVICE_NAME }}固件下载 ✨:" >> release.txt
         echo "" >> release.txt
         echo "💐 奶牛快传(国内高速下载)： ${{ env.COWTRANSFER_URL }} 🚀" >> release.txt
         echo "" >> release.txt
         echo "🗽 WeTransfer(国外高速下载)： ${{ env.WETRANSFER_URL }} 🚀" >> release.txt
         echo "" >> release.txt
-        echo "🌴 链接发布于${{ env.date2 }}，链接有效期为7天，无需注册直接下载 🐤" >> release.txt
+        echo "🌴 链接发布于 ${{ env.date2 }} ，链接有效期为7天，无需注册直接下载 🐤" >> release.txt
         echo "::set-output name=status::success"
     
     - name: 发布固件
