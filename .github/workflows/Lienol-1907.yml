@@ -203,7 +203,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=date1::$(date "+%Y年%m月%d号%S分")"
+        echo "::set-env name=date1::$(date "+%Y年%m月%d号(%S)")"
         echo "::set-env name=date2::$(date "+%Y年%m月%d号%k点%M分%S秒")"
         echo "🏅 ${{matrix.target}}固件下载 ✨:" >> release.txt
         echo "" >> release.txt
@@ -218,7 +218,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
-        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
         tag_name: ${{ env.date1 }}-${{ env.DEVICE_NAME }}
         body_path: release.txt
