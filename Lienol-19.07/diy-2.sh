@@ -1,6 +1,9 @@
 # 修改 banne 文件（banne在根目录的Lienol-19.07文件夹）
 rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./Lienol-19.07/banner openwrt/package/base-files/files/etc/ && cd openwrt
 
+# 修改 argon 为默认主题（编译时候不选择那些会自动更改为默认主题的主题才有效）
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+
 #sed -i 's/KERNEL_PATCHVER:=4.14/KERNEL_PATCHVER:=4.19/g' ./target/linux/x86/Makefile  #修改内核版本
 
 # 修改插件名字（修改名字后会不会对插件功能有影响自己多测试）
