@@ -9,7 +9,7 @@
 #代码里有 name: 后面的内容随便改,冒号后面是有个空格的,如果修改固件名字就要考虑能不能显示出你想要的
 
 
-name: CeShi-OpenWrt 固件
+name: Lienol-19.07-OpenWrt 固件
 
 on:
   repository_dispatch:
@@ -19,7 +19,7 @@ on:
 #    branches:
 #      - master
 #    paths:
-#      - 'x86-64/开启编译'
+#      - 'Lienol-19.07/开启编译'
 
 
 #定时触发开始编译(开启定时编译请先关闭SSH,要不然SSH没人管,会卡SSH编译失败)
@@ -46,7 +46,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [x86-64]
+        target: [Lienol-19.07]
 
     steps:
     - name: 准备结束
