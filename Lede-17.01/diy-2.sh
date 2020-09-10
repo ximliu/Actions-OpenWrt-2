@@ -26,4 +26,4 @@ sed -i 's/"Web 管理"/"页面管理"/g' package/lean/luci-app-webadmin/po/zh-cn
 sed -i 's/"管理权"/"修改密码"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i 's/"系统"/"路由设置"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i 's/"软件包"/"软件列表"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
-sed -i 's/"启动项"/"自启项目"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
+sed -i 's/"启动项"/"启动项目"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
