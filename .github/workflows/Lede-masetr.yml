@@ -203,7 +203,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=date1::$(date "+%Y年%m月%号 - %H点%M分%秒")"
+        echo "::set-env name=date1::$(date "+%Y年%m月%号-%H点%M分%秒")"
         echo "::set-env name=date2::$(date "+%Y年%m月%号%H点%M分%秒")"
         echo "🏅 ${{matrix.target}}固件下载 ✨:" >> release.txt
         echo "" >> release.txt
@@ -220,7 +220,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
-        tag_name: ${{ date1 }}-${{matrix.target}}
+        tag_name: ${{ env.date1 }}-${{matrix.target}}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
 
