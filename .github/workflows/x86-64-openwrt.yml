@@ -203,7 +203,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=date1::$(date "+%Y-%m-%d-%H:%M:%S")"
+        echo "::set-env name=date1::$(date "+%Y年%m月%号-%H点%M分%秒")"
         echo "::set-env name=date2::$(date +'%S')"
         echo "🏅 ${{matrix.target}}固件下载 ✨:" >> release.txt
         echo "" >> release.txt
