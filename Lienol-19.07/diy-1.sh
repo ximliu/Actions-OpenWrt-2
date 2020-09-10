@@ -4,8 +4,6 @@
 # 说明：
 # 除了第一行的#!/bin/bash不要动，其他的设置，前面带#表示不起作用，不带的表示起作用了（根据你自己需要打开或者关闭）
 #
-# 跟LEDE的不一样，19.07源码编译成功后就不需要登录密码的，所以不需要设置密码为空
-#
 
 
 # 修改openwrt登陆地址,把下面的192.168.2.2修改成你想要的就可以了
@@ -34,7 +32,6 @@ git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/diy/lu
 git clone https://github.com/garypang13/luci-app-eqos.git package/diy/luci-app-eqos  #内网IP限速工具
 git clone https://github.com/jerrykuku/node-request.git package/diy/node-request  #京东签到依赖
 git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/diy/luci-app-jd-dailybonus  #京东签到
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-filetransfer package/diy/luci-app-filetransfer  #文件传输（可用于安装IPK）
 
 
 #使用LEDE的ShadowSocksR Plus+出国软件 (源码自带passwall出国软件)
