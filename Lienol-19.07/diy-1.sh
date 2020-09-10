@@ -12,6 +12,12 @@ sed -i 's/192.168.1.1/192.168.2.2/g' ./package/base-files/files/bin/config_gener
 # 修改主机名字，把OpenWrt-123修改你喜欢的就行（不能纯数字或者使用中文）
 sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
 
+# 修改 argon 为默认主题（编译时候不选择那些会自动更改为默认主题的主题才有效）
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+
+# 内核显示增加自己个性名称（281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ 这些为后期增加）
+sed -i "s/OpenWrt /281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/default-settings/files/zzz-default-settings
+
 #添加自定义插件链接（自己想要什么就github里面搜索然后添加）
 git clone -b 18.06 https://github.com/garypang13/luci-theme-edge.git package/diy/luci-theme-edge  #主题-edge-动态登陆界面
 git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git package/diy/luci-theme-infinityfreedom  #透明主题
