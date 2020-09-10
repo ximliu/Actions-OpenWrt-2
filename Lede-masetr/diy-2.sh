@@ -1,6 +1,9 @@
 # 修改banne文件（banne在根目录Lede-masetr文件夹里面）
 rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./Lede-masetr/banner openwrt/package/base-files/files/etc/ && cd openwrt
 
+# 修改argon为默认主题（不选择那些会自动改变为默认主题的主题才有效果）
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+
 #sed -i 's/KERNEL_PATCHVER:=5.4/KERNEL_PATCHVER:=4.19/g' ./target/linux/x86/Makefile  #修改内核版本
 #sed -i 's/KERNEL_TESTING_PATCHVER:=5.4/KERNEL_TESTING_PATCHVER:=4.19/g' ./target/linux/x86/Makefile  #修改内核版本
 
@@ -21,4 +24,4 @@ sed -i 's/"带宽监控"/"监视"/g' feeds/luci/applications/luci-app-nlbwmon/po
 sed -i 's/"管理权"/"修改密码"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i 's/"系统"/"路由设置"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i 's/"软件包"/"软件列表"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
-sed -i 's/"启动项"/"启用/禁用"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
+sed -i 's/"启动项"/"启动项目"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
