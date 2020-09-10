@@ -53,7 +53,7 @@ jobs:
       uses: actions/checkout@main   
 
     - name: 开始编译,微信通知
-      if: env.SCKEY == 'true' && !cancelled()
+      if: env.WXTZ_SCKEY == 'true' && !cancelled()
       run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.WXTZ_NAME }}
 
     - name: 把开关转到根目录【${{matrix.target}}】｛Settings.ini｝
@@ -72,7 +72,7 @@ jobs:
         echo "::set-env name=UPLOAD_COWTRANSFER::${UPLOAD_COWTRANSFER}"
         echo "::set-env name=UPLOAD_WETRANSFER::${UPLOAD_WETRANSFER}"
         echo "::set-env name=UPLOAD_RELEASE::${UPLOAD_RELEASE}"
-        echo "::set-env name=SCKEY::${SCKEY}"
+        echo "::set-env name=WXTZ_SCKEY::${WXTZ_SCKEY}"
     
     - name: 开始安装编译所需系统
       env:
@@ -226,5 +226,5 @@ jobs:
         files: ${{ env.FIRMWARE }}/*
 
     - name: 编译结束,微信通知
-      if: env.SCKEY == 'true' && !cancelled()
+      if: env.WXTZ_SCKEY == 'true' && !cancelled()
       run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.WXTZ_NAME }}编译结束(${{ env.date2 }})
