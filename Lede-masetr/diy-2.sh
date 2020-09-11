@@ -1,11 +1,34 @@
-# 修改banne文件（banne在根目录Lede-masetr文件夹里面）
-rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./Lede-masetr/banner openwrt/package/base-files/files/etc/ && cd openwrt
+#!/bin/bash
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+
+# 修改openwrt登陆地址,把下面的192.168.2.2修改成你想要的就可以了
+sed -i 's/192.168.1.1/192.168.2.2/g' ./package/base-files/files/bin/config_generate
+
+# 修改主机名字，把OpenWrt-123修改你喜欢的就行（不能纯数字或者使用中文）
+sed -i 's/OpenWrt/OpenWrt/g' ./package/base-files/files/bin/config_generate
+
+# 版本号里显示一个自己的名字（281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ 这些都是后增加的）
+sed -i "s/OpenWrt /ximliu build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/lean/default-settings/files/zzz-default-settings
 
 # 修改argon为默认主题（不选择那些会自动改变为默认主题的主题才有效果）
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
-#sed -i 's/KERNEL_PATCHVER:=5.4/KERNEL_PATCHVER:=4.19/g' ./target/linux/x86/Makefile  #修改内核版本
-#sed -i 's/KERNEL_TESTING_PATCHVER:=5.4/KERNEL_TESTING_PATCHVER:=4.19/g' ./target/linux/x86/Makefile  #修改内核版本
+# 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
+sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' ./package/lean/default-settings/files/zzz-default-settings
+
+# 编译K3的时候会出很多其他牌子路由器固件的，这个代码使用之后只出K3固件
+#sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' ./target/linux/bcm53xx/image/Makefile
+
+# K2P使用，源码默认K2P路由器固件不能超过15MB，只能选择很少很少插件，使用后能增加到30MB，没机器测试不知道固件能不能用
+#sed -i 's/IMAGE_SIZE := 15744k/IMAGE_SIZE := 32448k/g' ./target/linux/ramips/image/mt7621.mk
+
+# 修改banne文件（banne在根目录Lede-masetr文件夹里面）
+rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./Lede-masetr/banner openwrt/package/base-files/files/etc/ && cd openwrt
+
+# 修改内核版本
+#sed -i 's/KERNEL_PATCHVER:=5.4/KERNEL_PATCHVER:=4.19/g' ./target/linux/x86/Makefile
+#sed -i 's/KERNEL_TESTING_PATCHVER:=5.4/KERNEL_TESTING_PATCHVER:=4.19/g' ./target/linux/x86/Makefile
 
 # 修改插件名字（修改名字后不知道会不会对插件功能有影响，自己多测试）
 sed -i 's/"BaiduPCS Web"/"百度网盘"/g' package/lean/luci-app-baidupcs-web/luasrc/controller/baidupcs-web.lua
