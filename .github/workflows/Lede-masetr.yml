@@ -152,8 +152,8 @@ jobs:
         path: openwrt/bin
 
     - name: 提取config.buildinfo配置文件
-      id: config
       continue-on-error: true
+      id: config
       run: |
           rm -rf config && mkdir config
           find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} config
@@ -181,8 +181,8 @@ jobs:
         
     - name: 上传固件在github空间
       uses: actions/upload-artifact@main
-      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
       continue-on-error: true
+      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
       with:
         name: CeShi_firmware_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
@@ -197,8 +197,8 @@ jobs:
         echo "::set-env name=COWTRANSFER_URL::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
     
     - name: 上传固件到WeTransfer（国外高速下载）
-      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       continue-on-error: true
+      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
@@ -207,8 +207,8 @@ jobs:
     
     - name: 发布奶牛快传和WeTransfer链接
       id: tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       continue-on-error: true
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
         echo "::set-env name=date1::$(date "+%Y年%m月%d号-%H点%M分%S秒")"
         echo "::set-env name=date2::$(date "+%d号%k点%M分")"
@@ -223,8 +223,8 @@ jobs:
     
     - name: 发布固件
       uses: softprops/action-gh-release@v1
-      if: steps.tag.outputs.status == 'success' && !cancelled()
       continue-on-error: true
+      if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
