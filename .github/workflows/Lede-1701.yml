@@ -9,7 +9,7 @@
 #代码里有 name: 后面的内容随便改,冒号后面是有个空格的,如果修改固件名字就要考虑能不能显示出你想要的
 
 
-name: Lede-17.01-OpenWrt 固件
+name: Lede-masetr-OpenWrt 固件
 
 on:
   repository_dispatch:
@@ -104,9 +104,10 @@ jobs:
     - name: 下载feeds跟安装自定义插件
       run: |
         cd openwrt
+        ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-    
+
     - name: 加载diy.config设置
       run: |
         [ -e ${{matrix.target}}/files ] && mv ${{matrix.target}}/files openwrt/files
@@ -191,6 +192,14 @@ jobs:
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
         echo "::set-env name=COWTRANSFER_URL::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
+    
+    - name: 上传固件到WeTransfer（国外高速下载）
+      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+        echo "::set-env name=WETRANSFER_URL::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
     
     - name: 发布奶牛快传和WeTransfer链接
       id: tag
