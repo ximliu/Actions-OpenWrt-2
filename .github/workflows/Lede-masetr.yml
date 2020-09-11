@@ -229,6 +229,6 @@ jobs:
         files: ${{ env.FIRMWARE }}/*
 
     - name: 编译结束,微信通知
-      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
+      if: env.SCKEY
       run: |
         [ ${{ env.status }} == 'success' ] && curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=🎉OpenWrt_${{ env.DEVICE_NAME }}编译完成😋|| curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=❌OpenWrt_${{ env.DEVICE_NAME }}编译失败😂
