@@ -1,3 +1,18 @@
+#!/bin/bash
+#============================================================
+# https://github.com/P3TERX/Actions-OpenWrt
+# Blog: https://p3terx.com
+#============================================================
+
+# 修改openwrt登陆地址,把下面的192.168.2.2修改成你想要的就可以了
+sed -i 's/192.168.1.1/192.168.2.2/g' package/base-files/files/bin/config_generate
+
+# 修改主机名字，把OpenWrt-123修改你喜欢的就行（不能纯数字或者使用中文）
+sed -i 's/OpenWrt/OpenWrt-123/g' package/base-files/files/bin/config_generate
+
+# 内核显示增加自己个性名称（281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ 这些为后期增加）
+sed -i "s/OpenWrt /281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/default-settings/files/zzz-default-settings
+
 # 修改 banne 文件（banne在根目录的Lienol-19.07文件夹）
 rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./Lienol-19.07/banner openwrt/package/base-files/files/etc/ && cd openwrt
 
