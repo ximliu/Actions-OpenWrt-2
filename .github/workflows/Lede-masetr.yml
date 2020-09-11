@@ -53,7 +53,7 @@ jobs:
       uses: actions/checkout@main   
 
     - name: 开始编译,微信通知
-      if: env.SERVERCHAN_SCKEY
+      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
       run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.SERVERCHAN }}
 
     - name: 把开关转到根目录【${{matrix.target}}】｛Settings.ini｝
@@ -233,6 +233,6 @@ jobs:
         files: ${{ env.FIRMWARE }}/*
 
     - name: 编译结束,微信通知
-      if: env.SERVERCHAN_SCKEY
+      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
       run: |
         [ ${{ env.status }} == 'success' ] && curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=🎉OpenWrt_${{ env.DEVICE_NAME }}编译完成😋|| curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=❌OpenWrt_${{ env.DEVICE_NAME }}编译失败😂
