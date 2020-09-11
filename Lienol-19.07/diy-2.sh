@@ -17,7 +17,8 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/M
 # 修改 banne 文件（banne在根目录的Lienol-19.07文件夹）
 rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./Lienol-19.07/banner openwrt/package/base-files/files/etc/ && cd openwrt
 
-#sed -i 's/KERNEL_PATCHVER:=4.14/KERNEL_PATCHVER:=4.19/g' ./target/linux/x86/Makefile  #修改内核版本
+# 修改内核版本
+#sed -i 's/KERNEL_PATCHVER:=4.14/KERNEL_PATCHVER:=4.19/g' ./target/linux/x86/Makefile
 
 # 修改插件名字（修改名字后不知道会不会对插件功能有影响，自己多测试）
 sed -i 's/"BaiduPCS Web"/"百度网盘"/g' package/lean/luci-app-baidupcs-web/luasrc/controller/baidupcs-web.lua
