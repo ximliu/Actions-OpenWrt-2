@@ -34,7 +34,7 @@ on:
 env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   SCKEY: ${{ secrets.SCKEY }}
-  WXTZ_NAME: Project的18.06固件
+  SERVERCHAN: Project的18.06固件
   TZ: Asia/Shanghai
 
 jobs:
@@ -53,8 +53,8 @@ jobs:
       uses: actions/checkout@main   
 
     - name: 开始编译,微信通知
-      if: env.SCKEY
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.WXTZ_NAME }}
+      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.SERVERCHAN }}
 
     - name: 把开关转到根目录【${{matrix.target}}】｛Settings.ini｝
       run: |
@@ -72,6 +72,7 @@ jobs:
         echo "::set-env name=UPLOAD_COWTRANSFER::${UPLOAD_COWTRANSFER}"
         echo "::set-env name=UPLOAD_WETRANSFER::${UPLOAD_WETRANSFER}"
         echo "::set-env name=UPLOAD_RELEASE::${UPLOAD_RELEASE}"
+        echo "::set-env name=SERVERCHAN_SCKEY::${SERVERCHAN_SCKEY}"
     
     - name: 开始安装编译所需系统
       env:
@@ -203,15 +204,15 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=date1::$(date "+%Y年%m月%号-%H点%M分%S秒")"
-        echo "::set-env name=date2::$(date "+%k点%M分-零%S秒")"
+        echo "::set-env name=date1::$(date "+%Y年%m月%d号-%H点%M分%S秒")"
+        echo "::set-env name=date2::$(date "+%d号%k点%M分")"
         echo "🏅 ${{ env.DEVICE_NAME }}固件下载 ✨:" >> release.txt
         echo "" >> release.txt
         echo "💐 奶牛快传(国内高速下载)： ${{ env.COWTRANSFER_URL }} 🚀" >> release.txt
         echo "" >> release.txt
         echo "🗽 WeTransfer(国外高速下载)： ${{ env.WETRANSFER_URL }} 🚀" >> release.txt
         echo "" >> release.txt
-        echo "🌴 链接发布于 ${{ env.date2 }} ，链接有效期为7天，无需注册直接下载 🐤" >> release.txt
+        echo "🌴 链接发布于${{ env.date2 }}链接有效期为7天，无需注册直接下载 🐤" >> release.txt
         echo "::set-output name=status::success"
     
     - name: 发布固件
@@ -225,5 +226,5 @@ jobs:
         files: ${{ env.FIRMWARE }}/*
 
     - name: 编译结束,微信通知
-      if: env.SCKEY
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.WXTZ_NAME }}编译结束(${{ env.date2 }})
+      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.SERVERCHANE }}编译结束

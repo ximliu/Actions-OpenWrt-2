@@ -19,7 +19,7 @@ on:
     branches:
       - master
     paths:
-      - 'x86-64/开启编译Lede-17.01'
+      - 'Lede-17.01/开启编译Lede-17.01'
 
 
 #定时触发开始编译(开启定时编译请先关闭SSH,要不然SSH没人管,会卡SSH编译失败)
@@ -34,7 +34,7 @@ on:
 env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   SCKEY: ${{ secrets.SCKEY }}
-  WXTZ_NAME: Lede的17.01固件
+  SERVERCHAN: Lede的17.01固件
   TZ: Asia/Shanghai
 
 jobs:
@@ -46,15 +46,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [x86-64]
+        target: [Lede-17.01]
 
     steps:
     - name: 准备结束
       uses: actions/checkout@main   
 
     - name: 开始编译,微信通知
-      if: env.SCKEY
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.WXTZ_NAME }}
+      if: env.SERVERCHAN_SCKEY
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.SERVERCHAN }}
 
     - name: 把开关转到根目录【${{matrix.target}}】｛Settings.ini｝
       run: |
@@ -72,6 +72,7 @@ jobs:
         echo "::set-env name=UPLOAD_COWTRANSFER::${UPLOAD_COWTRANSFER}"
         echo "::set-env name=UPLOAD_WETRANSFER::${UPLOAD_WETRANSFER}"
         echo "::set-env name=UPLOAD_RELEASE::${UPLOAD_RELEASE}"
+        echo "::set-env name=SERVERCHAN_SCKEY::${SERVERCHAN_SCKEY}"
     
     - name: 开始安装编译所需系统
       env:
@@ -103,9 +104,10 @@ jobs:
     - name: 下载feeds跟安装自定义插件
       run: |
         cd openwrt
+        ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-    
+
     - name: 加载diy.config设置
       run: |
         [ -e ${{matrix.target}}/files ] && mv ${{matrix.target}}/files openwrt/files
@@ -191,25 +193,39 @@ jobs:
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
         echo "::set-env name=COWTRANSFER_URL::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
     
-    - name: Generate tag
+    - name: 上传固件到WeTransfer（国外高速下载）
+      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+        echo "::set-env name=WETRANSFER_URL::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
+    
+    - name: 发布奶牛快传和WeTransfer链接
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-env name=RELEASE_TAG::$(date +"%Y.%m.%d-%H")"
-        echo "🚀 Auto build" >> release.txt
-        echo "🔗 [Cowtransfer](${{ env.COWTRANSFER_URL }})" >> release.txt
-        echo "🔗 [WeTransfer](${{ env.WETRANSFER_URL }})" >> release.txt
+        echo "::set-env name=date1::$(date "+%Y年%m月%d号-%H点%M分%S秒")"
+        echo "::set-env name=date2::$(date "+%d号%k点%M分")"
+        echo "🏅 ${{ env.DEVICE_NAME }}固件下载 ✨:" >> release.txt
+        echo "" >> release.txt
+        echo "💐 奶牛快传(国内高速下载)： ${{ env.COWTRANSFER_URL }} 🚀" >> release.txt
+        echo "" >> release.txt
+        echo "🗽 WeTransfer(国外高速下载)： ${{ env.WETRANSFER_URL }} 🚀" >> release.txt
+        echo "" >> release.txt
+        echo "🌴 链接发布于${{ env.date2 }}链接有效期为7天，无需注册直接下载 🐤" >> release.txt
         echo "::set-output name=status::success"
-    - name: Upload firmware to release
+    
+    - name: 发布固件
       uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
-        tag_name: ${{ env.RELEASE_TAG }}
+        tag_name: ${{ env.date1 }}-${{matrix.target}}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
 
     - name: 编译结束,微信通知
-      if: env.SCKEY
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.WXTZ_NAME }}编译结束(${{ env.date2 }})
+      if: env.SERVERCHAN_SCKEY
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.SERVERCHAN }}编译结束
