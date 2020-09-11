@@ -1,8 +1,6 @@
 #!/bin/bash
-#============================================================
-# https://github.com/P3TERX/Actions-OpenWrt
-# Blog: https://p3terx.com
-#============================================================
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
 
 # 修改openwrt登陆地址,把下面的192.168.2.2修改成你想要的就可以了
 sed -i 's/192.168.1.1/192.168.2.2/g' package/base-files/files/bin/config_generate
@@ -13,7 +11,7 @@ sed -i 's/OpenWrt/OpenWrt-123/g' package/base-files/files/bin/config_generate
 # 内核显示增加自己个性名称（281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ 这些为后期增加）
 sed -i "s/OpenWrt /281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/default-settings/files/zzz-default-settings
 
-# 修改argon为默认主题（不选择那些会自动改变为默认主题的主题才有效果）
+# 修改 argon 为默认主题（不选择那些会自动改变为默认主题的主题才有效果）
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # 修改 banne 文件（banne在根目录的Lienol-19.07文件夹）
