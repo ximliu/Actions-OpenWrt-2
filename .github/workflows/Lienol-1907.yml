@@ -213,7 +213,7 @@ jobs:
         echo "" >> release.txt
         echo "🗽 WeTransfer(国外高速下载)： ${{ env.WETRANSFER_URL }} 🚀" >> release.txt
         echo "" >> release.txt
-        echo "🌴 链接发布于 ${{ env.date2 }} ，链接有效期为7天，无需注册直接下载 🐤" >> release.txt
+        echo "🌴 链接发布于${{ env.date2 }}链接有效期为7天，无需注册直接下载 🐤" >> release.txt
         echo "::set-output name=status::success"
     
     - name: 发布固件
@@ -228,4 +228,4 @@ jobs:
 
     - name: 编译结束,微信通知
       if: env.SERVERCHAN_SCKEY
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.SERVERCHAN }}编译结束(${{ env.date2 }})
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.SERVERCHAN }}编译结束
