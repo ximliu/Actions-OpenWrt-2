@@ -13,6 +13,9 @@ sed -i 's/OpenWrt/OpenWrt-123/g' package/base-files/files/bin/config_generate
 # 内核显示增加自己个性名称（281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ 这些为后期增加）
 sed -i "s/OpenWrt /281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/default-settings/files/zzz-default-settings
 
+# 修改argon为默认主题（不选择那些会自动改变为默认主题的主题才有效果）
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+
 # 修改 banne 文件（banne在根目录的Lienol-19.07文件夹）
 rm -rf ./package/base-files/files/etc/banne && cd .. && cp -f ./Lienol-19.07/banner openwrt/package/base-files/files/etc/ && cd openwrt
 
