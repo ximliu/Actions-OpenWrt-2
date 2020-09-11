@@ -5,7 +5,6 @@
 # 除了第一行的#!/bin/bash不要动，其他的设置，前面带#表示不起作用，不带的表示起作用了（根据你自己需要打开或者关闭）
 #
 
-
 # 修改openwrt登陆地址,把下面的192.168.2.2修改成你想要的就可以了
 sed -i 's/192.168.1.1/192.168.2.2/g' ./package/base-files/files/bin/config_generate
 
@@ -13,7 +12,7 @@ sed -i 's/192.168.1.1/192.168.2.2/g' ./package/base-files/files/bin/config_gener
 sed -i 's/OpenWrt/OpenWrt-123/g' ./package/base-files/files/bin/config_generate
 
 # 内核显示增加自己个性名称（281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ 这些为后期增加）
-#sed -i "s/OpenWrt /281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/default-settings/files/zzz-default-settings
+sed -i "s/OpenWrt /281677160 build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/default-settings/files/zzz-default-settings
 
 #添加自定义插件链接（自己想要什么就github里面搜索然后添加）
 git clone -b 18.06 https://github.com/garypang13/luci-theme-edge.git package/diy/luci-theme-edge  #主题-edge-动态登陆界面
