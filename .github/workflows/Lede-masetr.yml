@@ -34,7 +34,6 @@ on:
 env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   SCKEY: ${{ secrets.SCKEY }}
-  SERVERCHAN: Lede的masetr固件
   TZ: Asia/Shanghai
 
 jobs:
@@ -52,10 +51,6 @@ jobs:
     - name: 准备结束
       uses: actions/checkout@main   
 
-    - name: 开始编译,微信通知
-      if: env.SERVERCHAN_SCKEY
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.SERVERCHAN }}
-
     - name: 把开关转到根目录【${{matrix.target}}】｛Settings.ini｝
       run: |
         source "${GITHUB_WORKSPACE}/${{matrix.target}}/settings.ini"
@@ -72,7 +67,6 @@ jobs:
         echo "::set-env name=UPLOAD_COWTRANSFER::${UPLOAD_COWTRANSFER}"
         echo "::set-env name=UPLOAD_WETRANSFER::${UPLOAD_WETRANSFER}"
         echo "::set-env name=UPLOAD_RELEASE::${UPLOAD_RELEASE}"
-        echo "::set-env name=SERVERCHAN_SCKEY::${SERVERCHAN_SCKEY}"
     
     - name: 开始安装编译所需系统
       env:
@@ -138,6 +132,7 @@ jobs:
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "::set-env name=DEVICE_NAME::$(cat DEVICE_NAME)"
         echo "::set-env name=FILE_DATE::$(date "+%Y-%m-%d %H.%M.%S")"
+        echo "::set-env name=status::success"
 
     - name: 检查github储存空间情况
       if: (!cancelled())
@@ -151,6 +146,7 @@ jobs:
         path: openwrt/bin
 
     - name: 提取config.buildinfo配置文件
+      continue-on-error: true
       id: config
       run: |
           rm -rf config && mkdir config
@@ -179,6 +175,7 @@ jobs:
         
     - name: 上传固件在github空间
       uses: actions/upload-artifact@main
+      continue-on-error: true
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
       with:
         name: CeShi_firmware_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
@@ -186,6 +183,7 @@ jobs:
 
     - name: 上传固件到奶牛快传（国内高速下载）
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+      continue-on-error: true
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
@@ -193,6 +191,7 @@ jobs:
         echo "::set-env name=COWTRANSFER_URL::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
     
     - name: 上传固件到WeTransfer（国外高速下载）
+      continue-on-error: true
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
@@ -202,6 +201,7 @@ jobs:
     
     - name: 发布奶牛快传和WeTransfer链接
       id: tag
+      continue-on-error: true
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
         echo "::set-env name=date1::$(date "+%Y年%m月%d号-%H点%M分%S秒")"
@@ -217,6 +217,7 @@ jobs:
     
     - name: 发布固件
       uses: softprops/action-gh-release@v1
+      continue-on-error: true
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
@@ -226,5 +227,6 @@ jobs:
         files: ${{ env.FIRMWARE }}/*
 
     - name: 编译结束,微信通知
-      if: env.SERVERCHAN_SCKEY
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{ env.SERVERCHAN }}编译结束(${{ env.date2 }})
+      if: env.SCKEY
+      run: |
+        [ ${{ env.status }} == 'success' ] && curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=🎉OpenWrt_${{ env.DEVICE_NAME }}编译完成😋|| curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=❌OpenWrt_${{ env.DEVICE_NAME }}编译失败😂
