@@ -68,11 +68,7 @@ jobs:
         echo "::set-env name=UPLOAD_COWTRANSFER::${UPLOAD_COWTRANSFER}"
         echo "::set-env name=UPLOAD_WETRANSFER::${UPLOAD_WETRANSFER}"
         echo "::set-env name=UPLOAD_RELEASE::${UPLOAD_RELEASE}"
-        echo "::set-env name=SERVERCHAN_SCKEY::${SERVERCHAN_SCKEY}"
-    
-    - name: 开始编译,微信通知
-      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=开始编译${{ env.SERVERCHAN }  
+        echo "::set-env name=SERVERCHAN_SCKEY::${SERVERCHAN_SCKEY}" 
     
     - name: 开始安装编译所需系统
       env:
